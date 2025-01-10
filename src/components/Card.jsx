@@ -1,9 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg"
 
 export default function Card({id, title, image_path, media_type}) {
+    const location = useLocation();
+    if(!media_type) {
+        media_type = location.pathname.replace(/^\/+/, '');
+    }
+    
   return (
     <div className='flex flex-col w-[160px] h-[300px] m-1 p-1 rounded-xl hover:scale-105 duration-200'>
 

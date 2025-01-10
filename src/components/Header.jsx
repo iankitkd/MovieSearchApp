@@ -47,7 +47,7 @@ export default function Header() {
                 className={({ isActive }) =>
                   isActive
                     ? "text-accent-teal border-b-2 border-accent-teal font-bold"
-                    : "hover:text-text-secondary"}
+                    : "hover:text-accent-teal"}
               >
                 {ele.title}
               </NavLink>

@@ -37,3 +37,43 @@ export const fetchSearchContent = async (query) => {
         return [];
     }
 }
+
+export const fetchMovieAll = async (category) => {
+    try {
+        if(! ["popular", "top_rated", "now_playing", "upcoming"].includes(category)) {
+            throw new Error("Invalid category");
+        }
+        const response = await apiConnector("GET", `${endPoints.movieUrl(category)}`);
+        const data = response.data.results;
+        const updatedData = data.map(ele => ({
+            id: ele.id,
+            title: ele.title || ele.name || ele.original_title,
+            image_path: IMAGE_BASE_URL + ele.poster_path,
+            media_type: ele.media_type
+        }))
+        return updatedData; 
+    } catch (error) {
+        console.error("Fetch Movie All :: Error", error)
+        return [];
+    }
+}
+
+export const fetchTvShowAll = async (category) => {
+    try {
+        if(! ["popular", "top_rated", "on_the_air", "airing_today"].includes(category)) {
+            throw new Error("Invalid category");
+        }
+        const response = await apiConnector("GET", `${endPoints.tvUrl(category)}`);
+        const data = response.data.results;
+        const updatedData = data.map(ele => ({
+            id: ele.id,
+            title: ele.title || ele.name || ele.original_title,
+            image_path: IMAGE_BASE_URL + ele.poster_path,
+            media_type: ele.media_type
+        }))
+        return updatedData; 
+    } catch (error) {
+        console.error("Fetch Movie All :: Error", error)
+        return [];
+    }
+}

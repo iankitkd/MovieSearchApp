@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import Card from "./Card";
 import Tab from "./Tab";
 import SearchModal from "./SearchModal";
+import CardDisplay from "./CardDisplay";
 
 export {
     Header,
@@ -10,4 +11,5 @@ export {
     Card,
     Tab,
     SearchModal,
+    CardDisplay,
 }
