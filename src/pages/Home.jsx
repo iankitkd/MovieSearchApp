@@ -53,14 +53,20 @@ export default function Home() {
         <div className='flex flex-row gap-4 overflow-x-auto overflow-y-hidden scrollbar
            scrollbar-thumb-background-card scrollbar-track-background scrollbar-thumb-rounded-full'>
           {
-            trendingLoading 
-            ? <div className='mx-auto p-6 text-xl'>Loading ...</div>
-            : trendingContent.length > 0 
-              ? trendingContent.map((ele) => {
+            trendingLoading ? (
+            <div className='mx-auto p-6 text-xl'>
+                Loading...
+              </div>
+            ) : (trendingContent.length > 0 ? (
+              trendingContent.map((ele) => {
                   return(
                     <Card key={ele.id} id={ele.id} title={ele.title} image_path={ele.image_path} media_type={ele.media_type} />
                   )})
-              : <div className='mx-auto p-6 text-xl'>No Content Found</div>
+              ) : (<div className='mx-auto p-6 text-xl'>
+                    No Content Found
+                  </div>
+              )
+            )
           }
         </div>
       </section>

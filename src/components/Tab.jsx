@@ -8,7 +8,7 @@ export default function Tab({tabItems, currentTab, setCurrentTab}) {
                 return(
                     <div 
                         key={index} 
-                        className={`px-4 py-2 rounded-full font-semibold ${currentTab == ele ? "bg-button-primary" : ""}`}
+                        className={`px-4 py-2 rounded-full font-semibold hover:cursor-pointer ${currentTab == ele ? "bg-button-primary" : ""}`}
                         onClick={() => setCurrentTab(ele)}
                     >
                         {ele}

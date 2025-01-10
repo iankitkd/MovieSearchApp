@@ -6,15 +6,34 @@ export const fetchTrendingAll = async (timeWindow) => {
         const response = await apiConnector("GET", endPoints.trendingUrl(timeWindow));
         const data = response.data.results;
         const updatedData = data.map(ele => ({
-                id: ele.id,
-                title: ele.title || ele.name || ele.original_title,
-                image_path: IMAGE_BASE_URL + ele.poster_path,
-                media_type: ele.media_type
-            })
-        )
+            id: ele.id,
+            title: ele.title || ele.name || ele.original_title,
+            image_path: IMAGE_BASE_URL + ele.poster_path,
+            media_type: ele.media_type
+        }))
         return updatedData;
     } catch (error) {
         console.error("Fetch Trending All :: Error", error)
+        return [];
+    }
+}
+
+export const fetchSearchContent = async (query) => {
+    try {
+        const queryParams = {query: query}
+        const response = await apiConnector("GET", `${endPoints.searchUrl}?query=${query}}`);
+        const data = response.data.results;
+        const updatedData = data.map(ele => ({
+            id: ele.id,
+            title: ele.title || ele.name || ele.original_title,
+            image_path: `${ (ele.poster_path || ele.profile_path) 
+                ? IMAGE_BASE_URL + (ele.poster_path || ele.profile_path) 
+                : ""}`,
+            media_type: ele.media_type
+        }))
+        return updatedData; 
+    } catch (error) {
+        console.error("Fetch Search content :: Error", error)
         return [];
     }
 }

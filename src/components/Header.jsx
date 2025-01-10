@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom';
 import { FaUserCircle } from "react-icons/fa";
+
+import { SearchModal } from './index';
 
 const navLinks = [
   {
@@ -18,6 +20,15 @@ const navLinks = [
 ]
 
 export default function Header() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <header className='bg-background-dark text-text-primary flex gap-4 justify-around items-center p-2'>
 
@@ -49,7 +60,9 @@ export default function Header() {
         <input
           type="text"
           placeholder='Search anything'
-          className='w-full rounded-full px-4 py-1.5 bg-background-light focus:outline-none' />
+          onClick={openModal} 
+          className="w-full rounded-full px-4 py-1.5 bg-background-light focus:outline-none"
+        />
       </div>
 
       <div className='rounded-full h-8 w-8 m-2'>
@@ -58,6 +71,8 @@ export default function Header() {
         </Link>
       </div>
 
+      {isModalOpen && <SearchModal closeModal={closeModal} />}
+      
     </header>
   )
 }
