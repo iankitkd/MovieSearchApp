@@ -43,7 +43,7 @@ export const fetchMovieAll = async (category) => {
         if(! ["popular", "top_rated", "now_playing", "upcoming"].includes(category)) {
             throw new Error("Invalid category");
         }
-        const response = await apiConnector("GET", `${endPoints.movieUrl(category)}`);
+        const response = await apiConnector("GET", `${endPoints.movieUrl}/${category}`);
         const data = response.data.results;
         const updatedData = data.map(ele => ({
             id: ele.id,
@@ -63,7 +63,7 @@ export const fetchTvShowAll = async (category) => {
         if(! ["popular", "top_rated", "on_the_air", "airing_today"].includes(category)) {
             throw new Error("Invalid category");
         }
-        const response = await apiConnector("GET", `${endPoints.tvUrl(category)}`);
+        const response = await apiConnector("GET", `${endPoints.tvUrl}/${category}`);
         const data = response.data.results;
         const updatedData = data.map(ele => ({
             id: ele.id,

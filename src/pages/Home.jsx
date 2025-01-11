@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import {fetchTrendingAll} from '../services/movieService';
-import {Card, Tab} from '../components';
+import {CardHorizontal, Tab} from '../components';
 
 const trendingTabs = ["Today", "This Week"];
 // const data = [
@@ -47,28 +47,15 @@ export default function Home() {
           <h2 className='text-xl font-bold'>
             Trending
           </h2>
-          <Tab tabItems={trendingTabs} currentTab={trendingWindow} setCurrentTab={setTrendingWindow} />
+          <Tab 
+            tabItems={trendingTabs} 
+            currentTab={trendingWindow} 
+            setCurrentTab={setTrendingWindow} />
         </div>
 
-        <div className='flex flex-row mx-2 gap-4 overflow-x-auto overflow-y-hidden scrollbar
-           scrollbar-thumb-background-card scrollbar-track-background scrollbar-thumb-rounded-full'>
-          {
-            trendingLoading ? (
-            <div className='mx-auto p-6 text-xl'>
-                Loading...
-              </div>
-            ) : (trendingContent.length > 0 ? (
-              trendingContent.map((ele) => {
-                  return(
-                    <Card key={ele.id} id={ele.id} title={ele.title} image_path={ele.image_path} media_type={ele.media_type} />
-                  )})
-              ) : (<div className='mx-auto p-6 text-xl'>
-                    No Content Found
-                  </div>
-              )
-            )
-          }
-        </div>
+        <CardHorizontal 
+          cardData={trendingContent} 
+          loading={trendingLoading}/>
       </section>
 
       <section></section>

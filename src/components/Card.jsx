@@ -14,13 +14,11 @@ export default function Card({id, title, image_path, media_type}) {
 
         <Link to={`/${media_type}/${id}`}>
             <div className='w-[150px] h-[225px]'>
-                {
-                    <img 
-                        src={image_path ? image_path : NoImagePlaceholder} alt={title}
-                        className='w-full h-full object-cover rounded-xl'
-                        loading="lazy"
-                    />
-                }
+                <img 
+                    src={image_path ? image_path : NoImagePlaceholder} alt={title}
+                    className='w-full h-full object-cover rounded-xl'
+                    loading="lazy"
+                />
 
                 {/* watchlist button */}
             </div>

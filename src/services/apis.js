@@ -5,6 +5,6 @@ export const endPoints = {
     searchUrl: `${API_BASE_URL}/search/multi`,
     trendingUrl: (timeWindow) => `${API_BASE_URL}/trending/all/${timeWindow}`,
 
-    movieUrl: (category) => `${API_BASE_URL}/movie/${category}`,
-    tvUrl: (category) => `${API_BASE_URL}/tv/${category}`,
+    movieUrl: `${API_BASE_URL}/movie`,
+    tvUrl: `${API_BASE_URL}/tv`,
 }

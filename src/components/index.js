@@ -4,6 +4,7 @@ import Card from "./Card";
 import Tab from "./Tab";
 import SearchModal from "./SearchModal";
 import CardDisplay from "./CardDisplay";
+import CardHorizontal from "./CardHorizontal";
 
 export {
     Header,
@@ -12,4 +13,5 @@ export {
     Tab,
     SearchModal,
     CardDisplay,
+    CardHorizontal,
 }

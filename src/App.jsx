@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { Home, Movie, Tv } from './pages'
+import { Detail, Home, Movie, Tv } from './pages'
 import { Header, Footer } from './components'
 
 function App() {
@@ -11,7 +11,10 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Home />} />
+
         <Route path='/movie' element={<Movie />} />
+        <Route path='/movie/:id' element={<Detail />} />
+        
         <Route path='/tv' element={<Tv />} />
       </Routes>
 

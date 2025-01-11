@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FaUserCircle } from "react-icons/fa";
 
 import { SearchModal } from './index';
@@ -20,6 +20,7 @@ const navLinks = [
 ]
 
 export default function Header() {
+  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
@@ -45,7 +46,7 @@ export default function Header() {
               <NavLink
                 to={ele.link}
                 className={({ isActive }) =>
-                  isActive
+                  isActive && location.pathname == ele.link
                     ? "text-accent-teal border-b-2 border-accent-teal font-bold"
                     : "hover:text-accent-teal"}
               >
