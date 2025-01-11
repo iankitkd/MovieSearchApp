@@ -16,6 +16,7 @@ function App() {
         <Route path='/movie/:id' element={<Detail />} />
         
         <Route path='/tv' element={<Tv />} />
+        <Route path='/tv/:id' element={<Detail />} />
       </Routes>
 
       <Footer />

@@ -6,9 +6,9 @@ export const fetchMovieDetails = async (id) => {
         const response = await apiConnector("GET", `${endPoints.movieUrl}/${id}`);
         const data = response.data;
 
-        const castDetails = await fetchCastDetails(id);
-        const recommendations = await fetchRecommendations(id);
-        const similars = await fetchSimilars(id);
+        const castDetails = await fetchCastDetails("movie", id);
+        const recommendations = await fetchRecommendations("movie", id);
+        const similars = await fetchSimilars("movie", id);
 
         const updatedData = {
             id: data.id,
@@ -31,9 +31,37 @@ export const fetchMovieDetails = async (id) => {
     }
 }
 
-const fetchCastDetails = async (id) => {
+export const fetchShowDetails = async (id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.movieUrl}/${id}/credits`);
+        const response = await apiConnector("GET", `${endPoints.tvUrl}/${id}`);
+        const data = response.data;
+
+        const castDetails = await fetchCastDetails("tv", id);
+        const recommendations = await fetchRecommendations("tv", id);
+        const similars = await fetchSimilars("tv", id);
+
+        const updatedData = {
+            id: data.id,
+            title: data.title || data.name || data.original_name,
+            poster_path: data.poster_path ? IMAGE_BASE_URL + data.poster_path : "",
+            backdrop_path: data.backdrop_path ? IMAGE_BASE_URL + data.backdrop_path : "",
+            overview: data.overview,
+            tagline: data.tagline,
+            genres: data.genres,
+            cast: castDetails,
+            recommendations: recommendations,
+            similars: similars
+        }
+        return updatedData;
+    } catch (error) {
+        console.log("Fetch Movie details :: Error", error);
+        return {};
+    }
+}
+
+const fetchCastDetails = async (type, id) => {
+    try {
+        const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/credits`);
         const cast = response.data.cast;
         const updatedData = cast.map((data) => ({
             id: data.id,
@@ -48,9 +76,9 @@ const fetchCastDetails = async (id) => {
         return [];
     }
 }
-const fetchSimilars = async (id) => {
+const fetchSimilars = async (type, id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.movieUrl}/${id}/similar`);
+        const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/similar`);
         const similars = response.data.results;
         const updatedData = similars.map((data) => ({
             id: data.id,
@@ -64,9 +92,9 @@ const fetchSimilars = async (id) => {
         return [];
     }
 }
-const fetchRecommendations = async (id) => {
+const fetchRecommendations = async (type, id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.movieUrl}/${id}/recommendations`);
+        const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/recommendations`);
         const recommendations = response.data.results;
         const updatedData = recommendations.map((data) => ({
             id: data.id,
@@ -88,7 +116,7 @@ const fetchDetails = async (path) => {
         if(type == "movie") {
             response = await fetchMovieDetails(id);
         } else if(type == "tv") {
-
+            response = await fetchShowDetails(id);
         }
         return response;
     } catch (error) {

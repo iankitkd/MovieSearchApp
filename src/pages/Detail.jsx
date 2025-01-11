@@ -75,11 +75,14 @@ export default function Detail() {
                           <span key={ele.id} className='border-r-2 border-text-secondary pr-2 mr-2'> {ele.name} </span>
                       ))}
                   </div>
+
+                  {(release_date || runtime) && 
                   <div className=''>
                       <span className='pr-2'>{release_date}</span>
                       <span className='pr-2 font-bold text-2xl'>&#183;</span>
                       <span className='pr-2'>{runtime}</span>
                   </div>
+                  }
 
                   <p className='py-2 italic text-text-secondary'>{tagline}</p>
 
@@ -89,19 +92,21 @@ export default function Detail() {
               </div>
             </section>
 
+            {cast && cast.length > 0 && 
             <section className='py-2'>
               <h2 className='text-2xl font-semibold p-3'>Cast</h2>
               <CardHorizontal cardData={cast}/>
             </section>
+            }
 
-            {similars.length > 0 && 
+            {similars && similars.length > 0 && 
             <section className='py-2'>
               <h2 className='text-2xl font-semibold p-3'>Similars</h2>
               <CardHorizontal cardData={similars}/>
             </section>
             }
 
-            {recommendations.length > 0 && 
+            {recommendations && recommendations.length > 0 && 
             <section className='py-2'>
               <h2 className='text-2xl font-semibold p-3'>Recommendations</h2>
               <CardHorizontal cardData={recommendations}/>
