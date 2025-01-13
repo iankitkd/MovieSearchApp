@@ -10,3 +10,11 @@ export const endPoints = {
     tvUrl: `${API_BASE_URL}/tv`,
     personUrl: `${API_BASE_URL}/person`,
 }
+
+export const externalPoints = {
+    imdbUrl: "https://imdb.com/name",
+    facebookUrl: "https://facebook.com",
+    instagramUrl: "https://instagram.com",
+    twitterUrl: "https://x.com",
+    youtubeUrl: "https://youtube.com",
+}

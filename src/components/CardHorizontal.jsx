@@ -10,7 +10,7 @@ export default function CardHorizontal({cardData, loading}) {
     };
 
   return (
-    <div className='flex flex-row gap-4 overflow-x-auto overflow-y-hidden'>
+    <div className='flex flex-row gap-4 overflow-x-auto overflow-y-hidden scroll-smooth'>
         {
         loading ? (
             <div className='mx-auto p-6 text-xl'>

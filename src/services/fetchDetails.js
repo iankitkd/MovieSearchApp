@@ -84,7 +84,7 @@ const fetchSimilars = async (type, id) => {
             id: data.id,
             title: data.title || data.name || data.original_name,
             image_path: data.poster_path ? IMAGE_BASE_URL + data.poster_path : "",
-            media_type: data.media_type,
+            media_type: data.media_type || type,
         }))
         return updatedData; 
     } catch (error) {

@@ -33,15 +33,15 @@ export default function Detail() {
     }, [path])
 
 
-    const renderContent = (details) => {
-        const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, cast, similars, recommendations} = details;
-
-        if (loading) {
-            return (<div className="mx-auto p-6 text-xl">Loading...</div>)
-        }
-        if (Object.keys(details).length === 0) {
-          return (<div className="mx-auto p-6 text-xl">No Content Found</div>)
-        }
+    const renderContent = (details) => { 
+      if (loading) {
+        return (<div className="mx-auto p-6 text-xl">Loading...</div>)
+      }
+      if (Object.keys(details).length === 0) {
+        return (<div className="mx-auto p-6 text-xl">No Content Found</div>)
+      }
+      
+      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, cast, similars, recommendations} = details;
       
         return (
           <div className='flex flex-col px-2'>
