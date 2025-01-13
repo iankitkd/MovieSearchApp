@@ -51,6 +51,17 @@ export default {
         button: '0 2px 4px rgba(0, 0, 0, 0.2)',    // Stronger shadow for buttons
         focus: '0 0 0 3px rgba(37, 99, 235, 0.5)', // Blue shadow for focused elements
       },
+
+      animation: {
+        'pulse-custom': 'pulse-custom 1s infinite',
+      },
+      keyframes: {
+        'pulse-custom': {
+          '0%, 100%': { transform: 'scale(0.8)', opacity: 0.5 }, // Shrink and fade
+          '50%': { transform: 'scale(1.5)', opacity: 1 },        // Enlarge and brighten
+        },
+      },
+
     },
   },
   plugins: [],

@@ -5,6 +5,7 @@ import Tab from "./Tab";
 import SearchModal from "./SearchModal";
 import CardDisplay from "./CardDisplay";
 import CardHorizontal from "./CardHorizontal";
+import Loader from "./Loader";
 
 export {
     Header,
@@ -14,4 +15,5 @@ export {
     SearchModal,
     CardDisplay,
     CardHorizontal,
+    Loader,
 }
