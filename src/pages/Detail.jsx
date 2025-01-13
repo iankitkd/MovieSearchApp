@@ -25,7 +25,7 @@ export default function Detail() {
                 }
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching trending content data:', error);
+                console.error('Error fetching details:', error);
                 setLoading(false);
             }
         }

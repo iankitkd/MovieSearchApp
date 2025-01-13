@@ -8,4 +8,5 @@ export const endPoints = {
 
     movieUrl: `${API_BASE_URL}/movie`,
     tvUrl: `${API_BASE_URL}/tv`,
+    personUrl: `${API_BASE_URL}/person`,
 }

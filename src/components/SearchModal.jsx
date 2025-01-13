@@ -40,7 +40,7 @@ export default function SearchModal({closeModal}) {
   }, [])
 
   return (
-    <div className='fixed inset-0 z-10 flex flex-col bg-background bg-opacity-90 transition-all duration-300' 
+    <div className='fixed inset-0 z-50 flex flex-col bg-background bg-opacity-90 transition-all duration-300' 
         onClick={handleOutsideClick}>
 
       <div className='flex flex-row h-[64px] py-2 px-12 z-20 justify-center items-center gap-4 bg-background-dark bg-opacity-100 text-lg' 

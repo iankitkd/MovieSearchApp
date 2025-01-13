@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { Detail, Home, Movie, Tv } from './pages'
+import { Detail, DetailPerson, Home, Movie, Tv } from './pages'
 import { Header, Footer } from './components'
 
 function App() {
@@ -17,6 +17,8 @@ function App() {
         
         <Route path='/tv' element={<Tv />} />
         <Route path='/tv/:id' element={<Detail />} />
+
+        <Route path='/person/:id' element={<DetailPerson />} />
       </Routes>
 
       <Footer />
