@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import {Card, Loader} from './index'
+import {Card, LoaderMovingBar, NoContentFound} from './index'
 
 export default function CardHorizontal({cardData, loading}) {
     const [visibleCount, setVisibleCount] = useState(20);
@@ -11,11 +11,11 @@ export default function CardHorizontal({cardData, loading}) {
 
     const renderContent = () => {
         if(loading) {
-            return (<Loader />)
+            return (<LoaderMovingBar />)
         }
 
         if(cardData.length == 0) {
-            return (<div className='mx-auto p-6 text-xl'> Content Found </div>)
+            return (<NoContentFound />)
         }
 
         return (

@@ -51,7 +51,7 @@ export default function SearchModal({closeModal}) {
           value={searchQuery}
           onChange={searchHandler}
           autoFocus
-          className='rounded-full w-2/3 px-4 py-1.5 bg-background-light focus:outline-none'
+          className='rounded-full w-5/6 md:w-2/3 px-2 py-1.5 bg-background-light focus:outline-none'
         />
 
         <button

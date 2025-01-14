@@ -54,11 +54,16 @@ export default {
 
       animation: {
         'pulse-custom': 'pulse-custom 1s infinite',
+        'movingBar': "movingBar 0.8s linear infinite",
       },
       keyframes: {
         'pulse-custom': {
           '0%, 100%': { transform: 'scale(0.8)', opacity: 0.5 }, // Shrink and fade
           '50%': { transform: 'scale(1.5)', opacity: 1 },        // Enlarge and brighten
+        },
+        'movingBar': {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
         },
       },
 

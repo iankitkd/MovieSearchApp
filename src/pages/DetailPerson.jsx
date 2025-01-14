@@ -6,7 +6,7 @@ import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
 
 import { fetchPersonDetails } from '../services/personService';
-import { Loader } from '../components';
+import { Loader, NoContentFound } from '../components';
 
 export default function DetailPerson() {
     const [loading, setLoading] = useState(false);
@@ -43,7 +43,7 @@ export default function DetailPerson() {
             return (<Loader />)
         }
         if (Object.keys(details).length === 0) {
-            return (<div className="mx-auto p-6 text-xl">No Content Found</div>)
+            return (<NoContentFound />)
         }
 
         const {id, name, profile_path, known_for_department, biography, gender, birthday, deathday, place_of_birth, external_ids} = details;

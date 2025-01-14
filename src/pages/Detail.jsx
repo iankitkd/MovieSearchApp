@@ -5,7 +5,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
 import fetchDetails from '../services/fetchDetails';
-import { CardHorizontal, Loader } from '../components';
+import { CardHorizontal, Loader, NoContentFound } from '../components';
 
 export default function Detail() {
     const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ export default function Detail() {
         return (<Loader />)
       }
       if (Object.keys(details).length === 0) {
-        return (<div className="mx-auto p-6 text-xl">No Content Found</div>)
+        return (<NoContentFound />)
       }
       
       const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, cast, similars, recommendations} = details;

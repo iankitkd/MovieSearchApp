@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Card, Loader} from "./index"
+import {Card, Loader, NoContentFound} from "./index"
 
 export default function CardDisplay({cardData, loading}) {
 
@@ -10,7 +10,7 @@ export default function CardDisplay({cardData, loading}) {
         }
 
         if(cardData.length == 0) {
-            return (<div className='mx-auto p-6 text-xl'> Content Found </div>)
+            return (<NoContentFound />)
         }
 
         return (

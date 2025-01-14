@@ -9,7 +9,7 @@ export default function ErrorPage({ errorCode = 404, message = 'Page Not Found' 
   }
 
   return (
-    <div className="flex items-center justify-center h-screen text-center">
+    <div className="flex items-center justify-center h-[calc(100vh-64px)] text-center">
       <div className="p-8 rounded-lg shadow-lg max-w-md mx-auto">
         <h1 className="text-5xl font-bold text-accent-red">{errorCode}</h1>
         <p className="text-xl text-text-secondary mt-4">{message}</p>

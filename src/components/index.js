@@ -6,6 +6,8 @@ import SearchModal from "./SearchModal";
 import CardDisplay from "./CardDisplay";
 import CardHorizontal from "./CardHorizontal";
 import Loader from "./Loader";
+import LoaderMovingBar from "./LoaderMovingBar";
+import NoContentFound from "./NoContentFound";
 
 export {
     Header,
@@ -16,4 +18,6 @@ export {
     CardDisplay,
     CardHorizontal,
     Loader,
+    LoaderMovingBar,
+    NoContentFound,
 }
