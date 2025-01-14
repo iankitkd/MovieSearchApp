@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Card, Loader, NoContentFound} from "./index"
+import {Card, CardPerson, Loader, NoContentFound} from "./index"
 
 export default function CardDisplay({cardData, loading}) {
 
@@ -15,6 +15,17 @@ export default function CardDisplay({cardData, loading}) {
 
         return (
             cardData.map((ele) => {
+                if(ele.media_type == "person") {
+                    return(
+                        <CardPerson 
+                            key={ele.id}
+                            id={ele.id}
+                            name={ele.title}
+                            image_path={ele.image_path}
+                            known_for_department={ele.known_for_department}
+                        />
+                    )
+                }
                 return (
                 <Card 
                     key={ele.id} 

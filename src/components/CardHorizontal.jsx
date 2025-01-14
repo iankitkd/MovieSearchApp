@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-import {Card, LoaderMovingBar, NoContentFound} from './index'
+import {Card, CardPerson, LoaderMovingBar, NoContentFound} from './index'
 
-export default function CardHorizontal({cardData, loading}) {
+export default function CardHorizontal({cardData, type, loading}) {
     const [visibleCount, setVisibleCount] = useState(20);
 
     const showMoreCards = () => {
@@ -21,20 +21,34 @@ export default function CardHorizontal({cardData, loading}) {
         return (
             <>
             {cardData.slice(0, visibleCount).map((ele) => {
+                if(type == "person") {
+                    return(
+                        <CardPerson 
+                            key={ele.id}
+                            id={ele.id}
+                            name={ele.title}
+                            image_path={ele.image_path}
+                            character={ele.character}
+                        />
+                    )
+                }
                 return(
                     <Card 
                         key={ele.id} 
                         id={ele.id} 
                         title={ele.title} 
                         image_path={ele.image_path} 
-                        media_type={ele.media_type} />
+                        media_type={ele.media_type} 
+                    />
                 )})
             }
             {visibleCount < cardData.length &&
-                (<div className='flex justify-center items-center mt-2 min-w-[150px] max-h-[225px] text-xl rounded-xl bg-background-card hover:text-text-contrast hover:scale-105 duration-200 cursor-pointer'
-                  onClick={showMoreCards}
-                >
-                    Show More
+                (<div className='mt-2 min-w-[150px] max-h-[225px] text-xl rounded-xl hover:text-text-contrast hover:scale-105 duration-200 cursor-pointer'>
+                    <div className={`${type == "person" ? "min-h-[150px] rounded-full mt-7" : "h-full rounded-xl"} flex justify-center items-center bg-background-card`}
+                        onClick={showMoreCards}   
+                    >
+                        Show More
+                    </div>
                 </div>)
             }
             </>  

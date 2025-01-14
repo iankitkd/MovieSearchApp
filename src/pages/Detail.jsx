@@ -53,9 +53,9 @@ export default function Detail() {
               }}>
 
               <div className="absolute inset-0 bg-black bg-opacity-75"></div>
-              <div className='relative z-10 py-2 px-4'
-                onClick={() => navigate(-1)}>
-                <IoIosArrowRoundBack className='text-text-secondary hover:text-text-contrast hover:-translate-x-1 transition-all duration-300 w-10 h-10' />
+              <div className='relative z-10 py-2 px-4'>
+                <IoIosArrowRoundBack className='text-text-secondary hover:text-text-contrast hover:-translate-x-1 transition-all duration-300 w-10 h-10' 
+                  onClick={() => navigate(-1)} />
               </div>
                 
               <div className='relative z-10 flex flex-col md:flex-row gap-4 ml-1'>
@@ -95,7 +95,7 @@ export default function Detail() {
             {cast && cast.length > 0 && 
             <section className='py-2'>
               <h2 className='text-2xl font-semibold p-3'>Cast</h2>
-              <CardHorizontal cardData={cast}/>
+              <CardHorizontal cardData={cast} type="person" />
             </section>
             }
 
