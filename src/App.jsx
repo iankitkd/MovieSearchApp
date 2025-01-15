@@ -1,12 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
 
 import { Detail, DetailPerson, ErrorPage, Home, Movie, Tv } from './pages'
-import { Header, Footer } from './components'
+import { Header, Footer, ScrollToTop } from './components'
 
 function App() {
 
   return (
     <div className='width-screen min-h-screen bg-background flex flex-col'>
+      <ScrollToTop />
+      
       <Header />
 
       <Routes>

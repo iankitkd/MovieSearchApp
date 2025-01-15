@@ -10,6 +10,7 @@ import Loader from "./Loader";
 import LoaderMovingBar from "./LoaderMovingBar";
 import NoContentFound from "./NoContentFound";
 import Carousel from "./Carousel";
+import ScrollToTop from "./ScrollToTop";
 
 export {
     Header,
@@ -24,4 +25,5 @@ export {
     LoaderMovingBar,
     NoContentFound,
     Carousel,
+    ScrollToTop,
 }
