@@ -50,7 +50,8 @@ export const fetchMovieAll = async (category) => {
             id: ele.id,
             title: ele.title || ele.name || ele.original_title,
             image_path: IMAGE_BASE_URL + ele.poster_path,
-            media_type: ele.media_type
+            backdrop_path: IMAGE_BASE_URL + ele.backdrop_path,
+            media_type: ele.media_type || "movie"
         }))
         return updatedData; 
     } catch (error) {
@@ -70,7 +71,7 @@ export const fetchTvShowAll = async (category) => {
             id: ele.id,
             title: ele.title || ele.name || ele.original_title,
             image_path: IMAGE_BASE_URL + ele.poster_path,
-            media_type: ele.media_type
+            media_type: ele.media_type || "tv"
         }))
         return updatedData; 
     } catch (error) {

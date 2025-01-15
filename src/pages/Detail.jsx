@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { IoIosArrowRoundBack } from "react-icons/io";
 
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
-import fetchDetails from '../services/fetchDetails';
+import fetchDetails from '../services/movieDetailsService';
 import { CardHorizontal, Loader, NoContentFound } from '../components';
 
 export default function Detail() {

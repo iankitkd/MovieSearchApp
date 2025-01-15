@@ -44,7 +44,7 @@ export default function CardHorizontal({cardData, type, loading}) {
             }
             {visibleCount < cardData.length &&
                 (<div className='mt-2 min-w-[150px] max-h-[225px] text-xl rounded-xl hover:text-text-contrast hover:scale-105 duration-200 cursor-pointer'>
-                    <div className={`${type == "person" ? "min-h-[150px] rounded-full mt-7" : "h-full rounded-xl"} flex justify-center items-center bg-background-card`}
+                    <div className={`${type == "person" ? "min-h-[150px] rounded-full" : "h-full rounded-xl"} flex justify-center items-center bg-background-card`}
                         onClick={showMoreCards}   
                     >
                         Show More

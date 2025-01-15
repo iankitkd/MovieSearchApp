@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 import {fetchTrendingAll} from '../services/movieService';
-import {CardHorizontal, Tab} from '../components';
+import {CardHorizontal, Carousel, Tab} from '../components';
 
 const trendingTabs = ["Today", "This Week"];
-// const data = [
-//   {id: 0, title: "Title", image_path: "", media_type:"movie"}, {id: 1, title: "Title", image_path: ""}, {id: 2, title: "Title", image_path: ""}, {id: 3, title: "Title", image_path: ""}, 
-//   {id: 4, title: "Title", image_path: ""}, {id: 5, title: "Title", image_path: ""}, {id: 6, title: "Title", image_path: ""}, {id: 7, title: "Title", image_path: ""}, 
-//   {id: 8, title: "Title", image_path: ""}, {id: 9, title: "Title", image_path: ""}, {id: 10, title: "Title", image_path: ""}, {id: 11, title: "Title", image_path: ""}, 
-//   {id: 12, title: "Title", image_path: ""}, {id: 13, title: "Title", image_path: ""}, {id: 14, title: "Title", image_path: ""}, {id: 15, title: "Title", image_path: ""}, 
-//   {id: 16, title: "Title", image_path: ""}, {id: 17, title: "Title", image_path: ""}, {id: 18, title: "Title", image_path: ""}, {id: 19, title: "Title", image_path: ""}, 
-// ]
 
 export default function Home() {
   const [trendingLoading, setTrendingLoading] = useState(false);
   const [trendingWindow, setTrendingWindow] = useState(trendingTabs[0]);
   const [trendingContent, setTrendingContent] = useState([]);
-  // const [trendingContent, setTrendingContent] = useState(data);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +32,9 @@ export default function Home() {
   return (
     <div className='flex-grow text-text-primary'>
 
-      <section></section>
+      <section className=''>
+        <Carousel />
+      </section>
 
       <section>
         <div className='flex flex-row items-center gap-4 m-4'>
@@ -50,12 +44,14 @@ export default function Home() {
           <Tab 
             tabItems={trendingTabs} 
             currentTab={trendingWindow} 
-            setCurrentTab={setTrendingWindow} />
+            setCurrentTab={setTrendingWindow} 
+          />
         </div>
 
         <CardHorizontal 
           cardData={trendingContent} 
-          loading={trendingLoading}/>
+          loading={trendingLoading}
+        />
       </section>
 
       <section></section>

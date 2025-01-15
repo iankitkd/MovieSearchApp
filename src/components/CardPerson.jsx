@@ -5,7 +5,7 @@ import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg"
 
 export default function CardPerson({id, name, image_path, character, known_for_department}) {
   return (
-    <div className='flex flex-col justify-center w-[160px] h-[300px] m-1 p-1 rounded-xl hover:scale-105 duration-200'>
+    <div className='flex flex-col w-[160px] h-[300px] m-1 p-1 rounded-xl hover:scale-105 duration-200'>
 
         <Link to={`/person/${id}`}>
             <div className='w-[150px] h-[150px] rounded-full'>

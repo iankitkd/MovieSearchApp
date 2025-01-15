@@ -9,6 +9,7 @@ import CardHorizontal from "./CardHorizontal";
 import Loader from "./Loader";
 import LoaderMovingBar from "./LoaderMovingBar";
 import NoContentFound from "./NoContentFound";
+import Carousel from "./Carousel";
 
 export {
     Header,
@@ -22,4 +23,5 @@ export {
     Loader,
     LoaderMovingBar,
     NoContentFound,
+    Carousel,
 }
