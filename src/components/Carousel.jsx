@@ -6,9 +6,14 @@ import { fetchMovieAll } from '../services/movieService';
 
 export default function Carousel() {
     const total = 5;
+    const autoScrollInterval = 5000;
+
     const [currentIndex, setCurrentIndex] = useState(0);
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
 
     const handleLeftClick = () => {
       setCurrentIndex((prevIndex) => (prevIndex - 1) % total);
@@ -38,16 +43,45 @@ export default function Carousel() {
     useEffect(() => {
         const interval = setInterval(() => {
           handleRightClick();
-        }, 5000);
+        }, autoScrollInterval);
     
         return () => clearInterval(interval);
     }, [currentIndex]);
 
 
+    const handleTouchStart = (e) => {
+      setTouchStart(e.touches[0].clientX);
+    };
+  
+    const handleTouchMove = (e) => {
+      setTouchEnd(e.touches[0].clientX);
+    };
+  
+    const handleTouchEnd = () => {
+      if (!touchStart || !touchEnd) return;
+  
+      const distance = touchStart - touchEnd;
+      const swipeThreshold = 50;
+  
+      if (distance > swipeThreshold) {
+        handleRightClick();
+      } else if (distance < -swipeThreshold) {
+        handleLeftClick();
+      }
+  
+      setTouchStart(null);
+      setTouchEnd(null);
+    };
+
+
   return (
     <>
     {!loading ?
-        (<div className='relative w-full flex items-center max-w-5xl mx-auto overflow-hidden'>
+        (<div className='relative w-full flex items-center max-w-5xl mx-auto overflow-hidden'
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+        >
             
             <div className="flex w-full transition-transform duration-500"
               style={{
