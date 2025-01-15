@@ -4,6 +4,7 @@ import Tv from "./Tv";
 import Person from "./Person";
 import Detail from "./Detail";
 import DetailPerson from "./DetailPerson";
+import Watchlist from "./Watchlist";
 import ErrorPage from "./ErrorPage";
 
 export {
@@ -13,5 +14,6 @@ export {
     Person,
     Detail,
     DetailPerson,
+    Watchlist,
     ErrorPage,
 }

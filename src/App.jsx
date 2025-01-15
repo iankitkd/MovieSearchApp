@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { Detail, DetailPerson, ErrorPage, Home, Movie, Person, Tv } from './pages'
+import { Detail, DetailPerson, ErrorPage, Home, Movie, Person, Tv, Watchlist } from './pages'
 import { Header, Footer, ScrollToTop } from './components'
 
 function App() {
@@ -22,6 +22,8 @@ function App() {
 
         <Route path='/person/' element={<Person />} />
         <Route path='/person/:id' element={<DetailPerson />} />
+        
+        <Route path='/watchlist/' element={<Watchlist />} />
 
         <Route path='*' element={<ErrorPage />} />
       </Routes>
