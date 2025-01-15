@@ -18,6 +18,10 @@ const navLinks = [
     title: "TV Shows",
     link: "/tv"
   },
+  {
+    title: "Person",
+    link: "/person"
+  },
 ]
 
 export default function Header() {

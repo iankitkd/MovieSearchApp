@@ -46,3 +46,23 @@ export const fetchPersonExternalId = async (personId) => {
         return {};
     }
 }
+
+export const fetchPersonPopular = async () => {
+    try {
+        const response = await apiConnector("GET", `${endPoints.personUrl}/popular`);
+        const datas = response.data.results;
+
+        const updatedData = datas.map(data => ({
+            id: data.id,
+            title: data.name || data.original_name,
+            image_path: data.profile_path ? IMAGE_BASE_URL + data.profile_path : "",
+            known_for_department: data.known_for_department,
+            media_type: data.media_type || "person",
+            gender: genders[data.gender],
+        }))
+        return updatedData;
+    } catch (error) {
+        console.log("Fetch Person Popular :: Error", error);
+        return {};
+    }
+}
