@@ -1,9 +1,18 @@
 import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { Detail, DetailPerson, ErrorPage, Home, Movie, Person, Tv, Watchlist } from './pages'
 import { Header, Footer, ScrollToTop } from './components'
+import { fetchUserLocation } from './store/slices/userLocationSlice'
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserLocation());
+  }, [dispatch])
+  
 
   return (
     <div className='width-screen min-h-screen bg-background flex flex-col'>

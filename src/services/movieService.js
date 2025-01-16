@@ -39,12 +39,12 @@ export const fetchSearchContent = async (query) => {
     }
 }
 
-export const fetchMovieAll = async (category) => {
+export const fetchMovieAll = async (category, region) => {
     try {
         if(! ["popular", "top_rated", "now_playing", "upcoming"].includes(category)) {
             throw new Error("Invalid category");
         }
-        const response = await apiConnector("GET", `${endPoints.movieUrl}/${category}`);
+        const response = await apiConnector("GET", `${endPoints.movieUrl}/${category}`, {region});
         const data = response.data.results;
         const updatedData = data.map(ele => ({
             id: ele.id,

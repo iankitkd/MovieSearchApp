@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react'
+import { useSelector } from 'react-redux';
 
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import {Loader} from "./index"
 import { fetchMovieAll } from '../services/movieService';
 
 export default function Carousel() {
+    const region = useSelector((state) => state.userLocation.countryCode);
     const total = 5;
     const autoScrollInterval = 5000;
 
@@ -27,7 +29,7 @@ export default function Carousel() {
         const fetchData = async () => {
           try {
             setLoading(true);
-            const response = await fetchMovieAll("now_playing");
+            const response = await fetchMovieAll("now_playing", region);
             if(response && response.length > 0) {
               setMovies(response.slice(0, total));
             }

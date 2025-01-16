@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux';
 
 import { Tab, CardDisplay } from '../components';
 import { fetchMovieAll } from '../services/movieService';
@@ -10,12 +11,14 @@ export default function Movie() {
     const [currentTab, setCurrentTab] = useState(movieTabs[0]);
     const [movieList, setMovieList] = useState([]);
 
+    const region = useSelector((state) => state.userLocation.countryCode);
+
     useEffect(() => {
         const fetchData = async () => {
           try {
             setLoading(true);
             const category = currentTab.toLowerCase().replace(/\s+/g, '_');
-            const response = await fetchMovieAll(category);
+            const response = await fetchMovieAll(category, region);
             if(response && response.length > 0) {
               setMovieList(response);
             }

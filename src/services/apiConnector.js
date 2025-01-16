@@ -4,7 +4,7 @@ const axiosInstance = axios.create({});
 
 const {VITE_ACCESS_TOKEN} = import.meta.env;
 
-const apiConnector = (method, url, bodyData, params, headers) => {
+const apiConnector = (method, url, params, bodyData, headers) => {
     return axiosInstance({
         method: method,
         url: url,

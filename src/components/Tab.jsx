@@ -29,7 +29,7 @@ export default function Tab({tabItems, currentTab, setCurrentTab}) {
             <FaCaretDown />
         </div>
 
-        {isMenuOpen && <div className='md:relative md:inset-0 absolute -top-4 left-0 w-full flex flex-col md:flex-row bg-button-disabled rounded-xl md:rounded-full'>
+        {isMenuOpen && <div className='md:relative md:inset-0 z-10 absolute -top-4 left-0 w-full flex flex-col md:flex-row bg-button-disabled rounded-xl md:rounded-full'>
             {
                 tabItems.map((ele, index) => {
                     return(
