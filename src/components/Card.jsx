@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg"
-import { BsBookmarkPlus, BsBookmarkCheck } from "react-icons/bs";
+import { BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
 
 import { addToWatchlist, removeFromWatchlist, selectWatchlist } from '../store/slices/watchlistSlice';
 
@@ -46,7 +46,7 @@ export default function Card({id, title, image_path, media_type}) {
                     }}
                 >
                     { 
-                        isInWatchlist ? <BsBookmarkCheck className='w-[25px] h-[30px]' />
+                        isInWatchlist ? <BsBookmarkCheckFill className='w-[25px] h-[30px]' />
                             : <BsBookmarkPlus className='w-[25px] h-[30px]' />
                     }
                 </div>

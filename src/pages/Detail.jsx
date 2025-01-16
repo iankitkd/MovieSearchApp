@@ -1,19 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { FaPlay } from "react-icons/fa";
+import { BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
+
 
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
 import fetchDetails from '../services/movieDetailsService';
-import { CardHorizontal, Loader, NoContentFound } from '../components';
+import { addToWatchlist, removeFromWatchlist, selectWatchlist } from '../store/slices/watchlistSlice';
+
+import { CardHorizontal, Loader, NoContentFound, TrailerModal } from '../components';
 
 export default function Detail() {
     const [loading, setLoading] = useState(false);
     const [details, setDetails] = useState({});
-
+    const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+    
     const navigate = useNavigate();
     const location = useLocation();
     const path = location.pathname;
+
+    const dispatch = useDispatch();
+    const watchlist = useSelector(selectWatchlist);
+
+    const [content, setContent] = useState({});
+    const isInWatchlist = watchlist.some(c => c.id === content.id);
+
+    const handleAddToWatchlist = () => {
+        dispatch(addToWatchlist(content));
+    }
+
+    const handleRemoveFromWatchlist = () => {
+        dispatch(removeFromWatchlist(content.id));
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,6 +43,9 @@ export default function Detail() {
                 const response = await fetchDetails(path);
                 if(response) {
                     setDetails(response);
+                    const [first , type, content_id] = path.split("/");
+                    const {id, title, poster_path} = response;
+                    setContent({id, title, image_path:poster_path, media_type:type}); 
                 }
                 setLoading(false);
             } catch (error) {
@@ -41,7 +65,7 @@ export default function Detail() {
         return (<NoContentFound />)
       }
       
-      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, cast, similars, recommendations} = details;
+      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, trailerPath, cast, similars, recommendations} = details;
       
         return (
           <div className='flex flex-col px-2'>
@@ -84,6 +108,28 @@ export default function Detail() {
                   </div>
                   }
 
+                  <div className='flex flex-row items-center gap-5 py-1'>
+                    <div className='w-[30px] h-[35px] flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-100 hover:cursor-pointer hover:scale-105'
+                        onClick={isInWatchlist ? handleRemoveFromWatchlist : handleAddToWatchlist}
+                    >
+                    { 
+                      isInWatchlist ? <BsBookmarkCheckFill className='w-[25px] h-[30px]' />
+                          : <BsBookmarkPlus className='w-[25px] h-[30px]' />
+                    }
+                    </div>
+
+                    {trailerPath &&
+                    <span className='flex flex-row items-center gap-1 w-fit hover:text-text-secondary hover:cursor-pointer' 
+                      onClick={() => setIsTrailerOpen(true)}
+                    >
+                      <FaPlay /> 
+                      <p>Watch Trailer</p>
+                    </span>
+                    }  
+                  </div>
+
+                  {isTrailerOpen && <TrailerModal trailerPath={trailerPath} closeTrailer={() => setIsTrailerOpen(false)} />}
+        
                   <p className='py-2 italic text-text-secondary'>{tagline}</p>
 
                   <h2 className='text-2xl font-semibold'>Overview</h2>
