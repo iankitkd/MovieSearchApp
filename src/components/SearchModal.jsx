@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { RxCross2 } from "react-icons/rx";
 
 import {CardDisplay} from './index';
@@ -38,6 +38,14 @@ export default function SearchModal({closeModal}) {
     setSearchQuery(value);
     debounceSearch(value);
   }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   return (
     <div className='fixed inset-0 z-50 flex flex-col bg-background bg-opacity-90 transition-all duration-300' 

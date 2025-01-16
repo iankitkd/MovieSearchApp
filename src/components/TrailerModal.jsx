@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { RxCross2 } from "react-icons/rx";
 
 export default function TrailerModal({trailerPath, closeTrailer}) { 
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+    
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, []);
+
     return (
         <div className='fixed inset-0 z-20 flex flex-col items-center justify-center bg-black bg-opacity-90 transition-all duration-300'>
     
