@@ -3,12 +3,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
 
-
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
-import fetchDetails from '../services/movieDetailsService';
+import fetchDetails, { fetchRecommendations } from '../services/movieDetailsService';
 import { addToWatchlist, removeFromWatchlist, selectWatchlist } from '../store/slices/watchlistSlice';
 
 import { CardHorizontal, Loader, NoContentFound, TrailerModal } from '../components';
@@ -17,6 +16,9 @@ export default function Detail() {
     const [loading, setLoading] = useState(false);
     const [details, setDetails] = useState({});
     const [isTrailerOpen, setIsTrailerOpen] = useState(false);
+    const [isRecommendationsOpen, setIsRecommendationsOpen] = useState(false);
+    const [recommendations, setRecommendations] = useState([]);
+    const [recommendationsLoading, setRecommendationsLoading] = useState(false);
     
     const navigate = useNavigate();
     const location = useLocation();
@@ -37,6 +39,28 @@ export default function Detail() {
         dispatch(removeFromWatchlist(content.id));
     }
 
+    const handleRecommendations = () => {
+      const fetchData = async () => {
+        try {
+          setRecommendationsLoading(true);
+          const response = await fetchRecommendations(media_type, content_id);
+          if(response && response.length > 0) {
+            setRecommendations(response);
+            console.log(response)
+          }
+        } catch (error) {
+          console.log("Error fetching recommendations", error);
+        } finally {
+          setRecommendationsLoading(false);
+        }
+      }
+
+      if(recommendations.length == 0) {
+        fetchData();
+      }
+      setIsRecommendationsOpen((prev) => !prev);
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -54,6 +78,8 @@ export default function Detail() {
             }
         }
         fetchData();
+        setIsRecommendationsOpen(false);
+        setRecommendations([]);
     }, [path])
 
 
@@ -65,7 +91,7 @@ export default function Detail() {
         return (<NoContentFound />)
       }
       
-      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, trailerPath, cast, similars, recommendations} = details;
+      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, cast, similars} = details;
       
         return (
           <div className='flex flex-col px-2'>
@@ -150,12 +176,17 @@ export default function Detail() {
             </section>
             }
 
-            {recommendations && recommendations.length > 0 && 
             <section className='py-2'>
-              <h2 className='text-2xl font-semibold p-3'>Recommendations</h2>
-              <CardHorizontal cardData={recommendations}/>
+              <div className='flex items-center'>
+                <h2 className='text-2xl font-semibold p-3'>Recommendations</h2>
+                <button className='text-2xl font-semibold' onClick={handleRecommendations}>
+                  {isRecommendationsOpen ? <FaCaretUp /> : <FaCaretDown />}
+                </button>
+              </div>
+              {isRecommendationsOpen && 
+                <CardHorizontal cardData={recommendations} loading={recommendationsLoading} />
+              }
             </section>
-            }
 
           </div>
         )
