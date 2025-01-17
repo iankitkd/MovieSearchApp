@@ -25,21 +25,14 @@ export default function CardHorizontal({cardData, type, loading}) {
                     return(
                         <CardPerson 
                             key={ele.id}
-                            id={ele.id}
-                            name={ele.title}
-                            image_path={ele.image_path}
-                            character={ele.character}
-                            known_for_department={ele.known_for_department}
+                            content={ele}
                         />
                     )
                 }
                 return(
                     <Card 
-                        key={ele.id} 
-                        id={ele.id} 
-                        title={ele.title} 
-                        image_path={ele.image_path} 
-                        media_type={ele.media_type} 
+                        key={ele.id}
+                        content={ele}
                     />
                 )})
             }

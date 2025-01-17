@@ -11,6 +11,7 @@ export const fetchTrendingAll = async (timeWindow) => {
             image_path: IMAGE_BASE_URL + (ele.poster_path || ele.profile_path),
             media_type: ele.media_type,
             known_for_department : ele.known_for_department || "",
+            vote_average: Math.trunc(ele.vote_average * 10) || "",
         }))
         return updatedData;
     } catch (error) {
@@ -21,7 +22,6 @@ export const fetchTrendingAll = async (timeWindow) => {
 
 export const fetchSearchContent = async (query) => {
     try {
-        const queryParams = {query: query}
         const response = await apiConnector("GET", `${endPoints.searchUrl}?query=${query}}`);
         const data = response.data.results;
         const updatedData = data.map(ele => ({
@@ -30,6 +30,7 @@ export const fetchSearchContent = async (query) => {
             image_path: `${ (ele.poster_path || ele.profile_path) 
                 ? IMAGE_BASE_URL + (ele.poster_path || ele.profile_path) 
                 : ""}`,
+            vote_average: Math.trunc(ele.vote_average * 10) || "",
             media_type: ele.media_type,
             known_for_department: ele.known_for_department
         }))
@@ -50,8 +51,9 @@ export const fetchMovieAll = async (category, region) => {
         const updatedData = data.map(ele => ({
             id: ele.id,
             title: ele.title || ele.name || ele.original_title,
-            image_path: IMAGE_BASE_URL + ele.poster_path,
+            image_path: ele.poster_path ? IMAGE_BASE_URL + ele.poster_path : "",
             backdrop_path: IMAGE_BASE_URL + ele.backdrop_path,
+            vote_average: Math.trunc(ele.vote_average * 10) || "",
             media_type: ele.media_type || "movie"
         }))
         return updatedData; 
@@ -71,7 +73,8 @@ export const fetchTvShowAll = async (category) => {
         const updatedData = data.map(ele => ({
             id: ele.id,
             title: ele.title || ele.name || ele.original_title,
-            image_path: IMAGE_BASE_URL + ele.poster_path,
+            image_path: ele.poster_path ? IMAGE_BASE_URL + ele.poster_path : "",
+            vote_average: Math.trunc(ele.vote_average * 10) || "",
             media_type: ele.media_type || "tv"
         }))
         return updatedData; 

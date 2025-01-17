@@ -19,6 +19,7 @@ export const fetchMovieDetails = async (id) => {
             genres: data.genres,
             release_date: data.release_date,
             runtime: data.runtime ? `${(data.runtime / 60).toFixed(0)}h  ${data.runtime % 60}min` : "",
+            vote_average: Math.trunc(data.vote_average * 10) || "",
             cast: castDetails,
             similars: similars
         }
@@ -45,6 +46,7 @@ export const fetchShowDetails = async (id) => {
             overview: data.overview,
             tagline: data.tagline,
             genres: data.genres,
+            vote_average: Math.trunc(data.vote_average * 10) || "",
             cast: castDetails,
             similars: similars
         }
@@ -99,6 +101,7 @@ const fetchSimilars = async (type, id) => {
             id: data.id,
             title: data.title || data.name || data.original_name,
             image_path: data.poster_path ? IMAGE_BASE_URL + data.poster_path : "",
+            vote_average: Math.trunc(data.vote_average * 10) || "",
             media_type: data.media_type || type,
         }))
         return updatedData; 
@@ -115,6 +118,7 @@ export const fetchRecommendations = async (type, id) => {
             id: data.id,
             title: data.title || data.name || data.original_name,
             image_path: data.poster_path ? IMAGE_BASE_URL + data.poster_path : "",
+            vote_average: Math.trunc(data.vote_average * 10) || "",
             media_type: data.media_type,
         }))
         return updatedData; 

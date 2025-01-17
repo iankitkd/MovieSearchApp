@@ -12,6 +12,7 @@ import NoContentFound from "./NoContentFound";
 import Carousel from "./Carousel";
 import ScrollToTop from "./ScrollToTop";
 import TrailerModal from "./TrailerModal";
+import Rating from "./Rating";
 
 export {
     Header,
@@ -28,4 +29,5 @@ export {
     Carousel,
     ScrollToTop,
     TrailerModal,
+    Rating,
 }

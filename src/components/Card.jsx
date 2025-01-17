@@ -6,12 +6,12 @@ import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg"
 import { BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
 import { FaPlay } from "react-icons/fa";
 
-import {TrailerModal} from "./index"
+import {TrailerModal, Rating} from "./index"
 
 import { addToWatchlist, removeFromWatchlist, selectWatchlist } from '../store/slices/watchlistSlice';
 
-export default function Card({id, title, image_path, media_type}) {
-    const content =  {id, title, image_path, media_type};
+export default function Card({content}) {
+    var {id, title, image_path, media_type, vote_average} = content;
     
     const [isTrailerOpen, setIsTrailerOpen] = useState(false);
     const dispatch = useDispatch();
@@ -55,9 +55,13 @@ export default function Card({id, title, image_path, media_type}) {
                             : <BsBookmarkPlus className='w-[25px] h-[30px]' />
                     }
                 </div>
+
+                <div className='absolute right-0 -bottom-3'>
+                    <Rating rating={vote_average}/>
+                </div>
             </div>
 
-            <div className='p-2 hover:text-accent-teal h-[60px] line-clamp-2'>
+            <div className='pt-3 px-1 hover:text-accent-teal h-[60px] line-clamp-2'>
                 {title}
             </div>
 

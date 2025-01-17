@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg"
 
-export default function CardPerson({id, name, image_path, character, known_for_department}) {
+export default function CardPerson({content}) {
+    const {id, title, image_path, character, known_for_department} = content;
+
   return (
     <div className='flex flex-col w-[160px] h-[300px] m-1 p-1 rounded-xl hover:scale-105 duration-200'>
 
@@ -18,7 +20,7 @@ export default function CardPerson({id, name, image_path, character, known_for_d
             </div>
 
             <div className='p-2 font-medium hover:text-accent-teal'>
-                {(name.length > 32) ? name.substring(0, 32)+"..." : name}
+                {(title.length > 32) ? title.substring(0, 32)+"..." : title}
             </div>
             <div className='px-2 text-text-secondary'>{character || known_for_department}</div>
         </Link>

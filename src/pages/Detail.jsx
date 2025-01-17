@@ -10,7 +10,7 @@ import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
 import fetchDetails, { fetchRecommendations } from '../services/movieDetailsService';
 import { addToWatchlist, removeFromWatchlist, selectWatchlist } from '../store/slices/watchlistSlice';
 
-import { CardHorizontal, Loader, NoContentFound, TrailerModal } from '../components';
+import { CardHorizontal, Loader, NoContentFound, TrailerModal, Rating } from '../components';
 
 export default function Detail() {
     const [loading, setLoading] = useState(false);
@@ -46,7 +46,6 @@ export default function Detail() {
           const response = await fetchRecommendations(media_type, content_id);
           if(response && response.length > 0) {
             setRecommendations(response);
-            console.log(response)
           }
         } catch (error) {
           console.log("Error fetching recommendations", error);
@@ -91,7 +90,7 @@ export default function Detail() {
         return (<NoContentFound />)
       }
       
-      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, cast, similars} = details;
+      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, vote_average, cast, similars} = details;
       
         return (
           <div className='flex flex-col px-2'>
@@ -135,6 +134,8 @@ export default function Detail() {
                   }
 
                   <div className='flex flex-row items-center gap-5 py-1'>
+                    <div><Rating rating={vote_average} /></div>
+
                     <div className='w-[30px] h-[35px] flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-100 hover:cursor-pointer hover:scale-105'
                         onClick={isInWatchlist ? handleRemoveFromWatchlist : handleAddToWatchlist}
                     >
