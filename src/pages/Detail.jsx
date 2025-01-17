@@ -67,8 +67,8 @@ export default function Detail() {
                 const response = await fetchDetails(path);
                 if(response) {
                     setDetails(response);
-                    const {id, title, poster_path} = response;
-                    setContent({id, title, image_path:poster_path, media_type}); 
+                    const {id, title, poster_path, vote_average} = response;
+                    setContent({id, title, image_path:poster_path, media_type, vote_average}); 
                 }
                 setLoading(false);
             } catch (error) {

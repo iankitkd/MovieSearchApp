@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Tab, CardDisplay } from '../components';
 import { fetchMovieAll } from '../services/movieService';
+import { setMovieTab } from '../store/slices/currentTabSlice';
 
 const movieTabs = ["Popular", "Top Rated", "Now Playing", "Upcoming"];
 
 export default function Movie() {
+    const dispatch = useDispatch();
+    const region = useSelector((state) => state.userLocation.countryCode);
+    const currentMTab = useSelector((state) => state.currentTab.movieTab);
+
     const [loading, setLoading] = useState(false);
-    const [currentTab, setCurrentTab] = useState(movieTabs[0]);
+    const [currentTab, setCurrentTab] = useState(currentMTab || movieTabs[0]);
     const [movieList, setMovieList] = useState([]);
 
-    const region = useSelector((state) => state.userLocation.countryCode);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,7 +46,10 @@ export default function Movie() {
         <Tab 
             tabItems={movieTabs} 
             currentTab={currentTab} 
-            setCurrentTab={setCurrentTab} 
+            setCurrentTab={(tab) => {
+              dispatch(setMovieTab(tab));
+              setCurrentTab(tab);
+            }}
         />
       </div>
 

@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react'
 
 import { Tab, CardDisplay } from '../components';
 import { fetchTvShowAll } from '../services/movieService';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTvTab } from '../store/slices/currentTabSlice';
 
 const showTabs = ["Popular", "Top Rated", "On The Air", "Airing Today"];
 
 export default function Tv() {
+    const dispatch = useDispatch();
+    const currentTTab = useSelector((state) => state.currentTab.tvTab);
+
     const [loading, setLoading] = useState(false);
-    const [currentTab, setCurrentTab] = useState(showTabs[0]);
+    const [currentTab, setCurrentTab] = useState(currentTTab || showTabs[0]);
     const [showList, setShowList] = useState([]);
   
     useEffect(() => {
@@ -39,7 +44,10 @@ export default function Tv() {
           <Tab 
               tabItems={showTabs} 
               currentTab={currentTab} 
-              setCurrentTab={setCurrentTab} 
+              setCurrentTab={(tab) => {
+                dispatch(setTvTab(tab));
+                setCurrentTab(tab);
+            }} 
           />
         </div>
   

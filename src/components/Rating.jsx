@@ -17,7 +17,7 @@ export default function Rating({rating}) {
   return (
     <div className="relative w-[32px] h-[32px] bg-background-dark rounded-full">
       <svg className="w-full h-full transform rotate-[-90deg]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
-        <circle className={`${offsetCircleColor} fill-background-dark`} cx="18" cy="18" r="15.915" strokeWidth="2"></circle>
+        <circle className={`${offsetCircleColor} fill-transparent`} cx="18" cy="18" r="15.915" strokeWidth="2"></circle>
         <circle className={`${circleColor} fill-transparent`} cx="18" cy="18" r="15.915" strokeWidth="2" strokeDasharray="100" strokeDashoffset={strokeOffset}></circle>
       </svg>
       <div className="absolute inset-0 flex items-center justify-center text-sm text-text-secondary">

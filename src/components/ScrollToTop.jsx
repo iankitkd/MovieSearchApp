@@ -5,7 +5,11 @@ export default function ScrollToTop() {
     const location = useLocation();
 
     useEffect(() => {
-      window.scrollTo(0, 0);
+      const isDetailsPage = /^\/(movie|tv)\/\d+$/.test(location.pathname);
+
+      if (isDetailsPage) {
+        window.scrollTo(0, 0);
+      }
     }, [location])
     
     return null;

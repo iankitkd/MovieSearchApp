@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 
 import {fetchTrendingAll} from '../services/movieService';
 import {CardHorizontal, Carousel, Tab} from '../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTrendingTab } from '../store/slices/currentTabSlice';
 
 const trendingTabs = ["Today", "This Week"];
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const currentTTab = useSelector((state) => state.currentTab.trendingTab);
+
   const [trendingLoading, setTrendingLoading] = useState(false);
-  const [trendingWindow, setTrendingWindow] = useState(trendingTabs[0]);
+  const [trendingWindow, setTrendingWindow] = useState(currentTTab || trendingTabs[0]);
   const [trendingContent, setTrendingContent] = useState([]);
 
   useEffect(() => {
@@ -44,7 +49,10 @@ export default function Home() {
           <Tab 
             tabItems={trendingTabs} 
             currentTab={trendingWindow} 
-            setCurrentTab={setTrendingWindow} 
+            setCurrentTab={(tab) => {
+              dispatch(setTrendingTab(tab));
+              setTrendingWindow(tab);
+            }}
           />
         </div>
 
