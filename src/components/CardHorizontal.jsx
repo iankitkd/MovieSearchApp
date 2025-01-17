@@ -21,7 +21,7 @@ export default function CardHorizontal({cardData, type, loading}) {
         return (
             <>
             {cardData.slice(0, visibleCount).map((ele) => {
-                if(type == "person") {
+                if(type == "person" || ele.media_type == "person") {
                     return(
                         <CardPerson 
                             key={ele.id}
@@ -29,6 +29,7 @@ export default function CardHorizontal({cardData, type, loading}) {
                             name={ele.title}
                             image_path={ele.image_path}
                             character={ele.character}
+                            known_for_department={ele.known_for_department}
                         />
                     )
                 }

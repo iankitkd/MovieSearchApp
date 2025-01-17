@@ -6,7 +6,6 @@ export const fetchMovieDetails = async (id) => {
         const response = await apiConnector("GET", `${endPoints.movieUrl}/${id}`);
         const data = response.data;
 
-        const trailerPath = await fetchTrailer("movie", id);
         const castDetails = await fetchCastDetails("movie", id);
         const recommendations = await fetchRecommendations("movie", id);
         const similars = await fetchSimilars("movie", id);
@@ -21,7 +20,6 @@ export const fetchMovieDetails = async (id) => {
             genres: data.genres,
             release_date: data.release_date,
             runtime: data.runtime ? `${(data.runtime / 60).toFixed(0)}h  ${data.runtime % 60}min` : "",
-            trailerPath: trailerPath,
             cast: castDetails,
             recommendations: recommendations,
             similars: similars
@@ -38,7 +36,6 @@ export const fetchShowDetails = async (id) => {
         const response = await apiConnector("GET", `${endPoints.tvUrl}/${id}`);
         const data = response.data;
 
-        const trailerPath = await fetchTrailer("tv", id);
         const castDetails = await fetchCastDetails("tv", id);
         const recommendations = await fetchRecommendations("tv", id);
         const similars = await fetchSimilars("tv", id);
@@ -51,7 +48,6 @@ export const fetchShowDetails = async (id) => {
             overview: data.overview,
             tagline: data.tagline,
             genres: data.genres,
-            trailerPath: trailerPath,
             cast: castDetails,
             recommendations: recommendations,
             similars: similars
@@ -63,13 +59,16 @@ export const fetchShowDetails = async (id) => {
     }
 }
 
-const fetchTrailer = async (type, id) => {
+export const fetchTrailer = async (type, id) => {
     try {
         const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/videos`);
         const videos = response.data.results;
-        const updatedData = videos.find((video) => video.type == "Trailer");
+        var updatedData = videos.find((video) => video.type == "Trailer");
         if(!updatedData) {
-            videos.find((video) => video.type == "Teaser");
+            updatedData = videos.find((video) => video.type == "Teaser");
+        }
+        if(!updatedData) {
+            updatedData = videos[0];
         }
         const trailerPath = updatedData ? `${externalPoints.youtubeUrl}/embed/${updatedData.key}` : "";
         return trailerPath; 

@@ -21,6 +21,7 @@ export default function Detail() {
     const navigate = useNavigate();
     const location = useLocation();
     const path = location.pathname;
+    const [f, media_type, content_id] = path.split("/");
 
     const dispatch = useDispatch();
     const watchlist = useSelector(selectWatchlist);
@@ -43,9 +44,8 @@ export default function Detail() {
                 const response = await fetchDetails(path);
                 if(response) {
                     setDetails(response);
-                    const [first , type, content_id] = path.split("/");
                     const {id, title, poster_path} = response;
-                    setContent({id, title, image_path:poster_path, media_type:type}); 
+                    setContent({id, title, image_path:poster_path, media_type}); 
                 }
                 setLoading(false);
             } catch (error) {
@@ -118,17 +118,15 @@ export default function Detail() {
                     }
                     </div>
 
-                    {trailerPath &&
                     <span className='flex flex-row items-center gap-1 w-fit hover:text-text-secondary hover:cursor-pointer' 
                       onClick={() => setIsTrailerOpen(true)}
                     >
                       <FaPlay /> 
                       <p>Watch Trailer</p>
                     </span>
-                    }  
                   </div>
 
-                  {isTrailerOpen && <TrailerModal trailerPath={trailerPath} closeTrailer={() => setIsTrailerOpen(false)} />}
+                  {isTrailerOpen && <TrailerModal id={id} media_type={media_type} closeTrailer={() => setIsTrailerOpen(false)} />}
         
                   <p className='py-2 italic text-text-secondary'>{tagline}</p>
 

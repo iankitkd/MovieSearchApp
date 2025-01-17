@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg"
 import { BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
+import { FaPlay } from "react-icons/fa";
+
+import {TrailerModal} from "./index"
 
 import { addToWatchlist, removeFromWatchlist, selectWatchlist } from '../store/slices/watchlistSlice';
 
 export default function Card({id, title, image_path, media_type}) {
     const content =  {id, title, image_path, media_type};
+    
+    const [isTrailerOpen, setIsTrailerOpen] = useState(false);
     const dispatch = useDispatch();
     const watchlist = useSelector(selectWatchlist);
 
@@ -28,10 +33,10 @@ export default function Card({id, title, image_path, media_type}) {
     }
     
   return (
-    <div className='flex flex-col w-[160px] h-[300px] m-1 p-1 rounded-xl hover:scale-105 duration-200'>
+    <div className='flex flex-col w-[160px] h-[320px] m-1 p-1 rounded-xl'>
 
         <Link to={`/${media_type}/${id}`}>
-            <div className='w-[150px] h-[225px] relative'>
+            <div className='w-[150px] h-[225px] relative hover:scale-105 duration-200'>
                 <img 
                     src={image_path ? image_path : NoImagePlaceholder} alt={title}
                     className='w-full h-full object-cover rounded-xl'
@@ -52,10 +57,21 @@ export default function Card({id, title, image_path, media_type}) {
                 </div>
             </div>
 
-            <div className='p-2 hover:text-accent-teal'>
-                {(title.length > 32) ? title.substring(0, 32)+"..." : title}
+            <div className='p-2 hover:text-accent-teal h-[60px] line-clamp-2'>
+                {title}
+            </div>
+
+            <div className='flex flex-row justify-center items-center gap-1 text-text-secondary hover:text-text-primary hover:cursor-pointer' 
+                onClick={(event) => {
+                    event.preventDefault();
+                    setIsTrailerOpen(true);
+                }}
+            >
+                <FaPlay /> 
+                <p>Trailer</p>
             </div>
         </Link>
+        {isTrailerOpen && <TrailerModal id={id} media_type={media_type} closeTrailer={() => setIsTrailerOpen(false)} />}
     </div>
   )
 }

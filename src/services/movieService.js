@@ -8,8 +8,9 @@ export const fetchTrendingAll = async (timeWindow) => {
         const updatedData = data.map(ele => ({
             id: ele.id,
             title: ele.title || ele.name || ele.original_title,
-            image_path: IMAGE_BASE_URL + ele.poster_path,
-            media_type: ele.media_type
+            image_path: IMAGE_BASE_URL + (ele.poster_path || ele.profile_path),
+            media_type: ele.media_type,
+            known_for_department : ele.known_for_department || "",
         }))
         return updatedData;
     } catch (error) {

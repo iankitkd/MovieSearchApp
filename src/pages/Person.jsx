@@ -15,7 +15,6 @@ export default function Person() {
         if(response && response.length > 0) {
           setPersonList(response);
         }
-        console.log(response)
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
