@@ -19,6 +19,9 @@ export default function Detail() {
     const [isRecommendationsOpen, setIsRecommendationsOpen] = useState(false);
     const [recommendations, setRecommendations] = useState([]);
     const [recommendationsLoading, setRecommendationsLoading] = useState(false);
+    const [isSimilarsOpen, setIsSimilarsOpen] = useState(false);
+    const [similars, setSimilars] = useState([]);
+    const [similarsLoading, setSimilarsLoading] = useState(false);
     
     const navigate = useNavigate();
     const location = useLocation();
@@ -59,6 +62,26 @@ export default function Detail() {
       }
       setIsRecommendationsOpen((prev) => !prev);
     }
+    const handleSimilars = () => {
+      const fetchData = async () => {
+        try {
+          setSimilarsLoading(true);
+          const response = await fetchRecommendations(media_type, content_id);
+          if(response && response.length > 0) {
+            setSimilars(response);
+          }
+        } catch (error) {
+          console.log("Error fetching similars", error);
+        } finally {
+          setSimilarsLoading(false);
+        }
+      }
+
+      if(similars.length == 0) {
+        fetchData();
+      }
+      setIsSimilarsOpen((prev) => !prev);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -79,6 +102,8 @@ export default function Detail() {
         fetchData();
         setIsRecommendationsOpen(false);
         setRecommendations([]);
+        setIsSimilarsOpen(false);
+        setSimilars([]);
     }, [path])
 
 
@@ -90,7 +115,7 @@ export default function Detail() {
         return (<NoContentFound />)
       }
       
-      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, vote_average, cast, similars} = details;
+      const {id, title, poster_path, backdrop_path, overview, tagline, genres, release_date, runtime, vote_average, cast} = details;
       
         return (
           <div className='flex flex-col px-2'>
@@ -170,14 +195,19 @@ export default function Detail() {
             </section>
             }
 
-            {similars && similars.length > 0 && 
-            <section className='py-2'>
-              <h2 className='text-2xl font-semibold p-3'>Similars</h2>
-              <CardHorizontal cardData={similars}/>
-            </section>
+            <section className='pt-2'>
+              <div className='flex items-center'>
+                <h2 className='text-2xl font-semibold p-3'>Similars</h2>
+                <button className='text-2xl font-semibold' onClick={handleSimilars}>
+                    {isSimilarsOpen ? <FaCaretUp /> : <FaCaretDown />}
+                </button>
+              </div>
+            {isSimilarsOpen &&
+              <CardHorizontal cardData={similars} loading={similarsLoading}/>
             }
+            </section>
 
-            <section className='py-2'>
+            <section className='pt-2'>
               <div className='flex items-center'>
                 <h2 className='text-2xl font-semibold p-3'>Recommendations</h2>
                 <button className='text-2xl font-semibold' onClick={handleRecommendations}>

@@ -7,7 +7,6 @@ export const fetchMovieDetails = async (id) => {
         const data = response.data;
 
         const castDetails = await fetchCastDetails("movie", id);
-        const similars = await fetchSimilars("movie", id);
 
         const updatedData = {
             id: data.id,
@@ -21,7 +20,6 @@ export const fetchMovieDetails = async (id) => {
             runtime: data.runtime ? `${(data.runtime / 60).toFixed(0)}h  ${data.runtime % 60}min` : "",
             vote_average: Math.trunc(data.vote_average * 10) || "",
             cast: castDetails,
-            similars: similars
         }
         return updatedData;
     } catch (error) {
@@ -36,7 +34,6 @@ export const fetchShowDetails = async (id) => {
         const data = response.data;
 
         const castDetails = await fetchCastDetails("tv", id);
-        const similars = await fetchSimilars("tv", id);
 
         const updatedData = {
             id: data.id,
@@ -48,7 +45,6 @@ export const fetchShowDetails = async (id) => {
             genres: data.genres,
             vote_average: Math.trunc(data.vote_average * 10) || "",
             cast: castDetails,
-            similars: similars
         }
         return updatedData;
     } catch (error) {
@@ -93,7 +89,7 @@ const fetchCastDetails = async (type, id) => {
         return [];
     }
 }
-const fetchSimilars = async (type, id) => {
+export const fetchSimilars = async (type, id) => {
     try {
         const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/similar`);
         const similars = response.data.results;
