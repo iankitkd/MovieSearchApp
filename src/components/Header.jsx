@@ -49,7 +49,7 @@ export default function Header() {
       </div>
 
       <div className='font-bold text-2xl w-1/2 lg:w-1/6'>
-        <Link to="/">
+        <Link to="/" className="bg-gradient-to-r from-green-500 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
           CinePick
         </Link>
       </div>

@@ -8,48 +8,48 @@ export default {
     extend: {
       colors: {
         background: {
-          DEFAULT: '#0F172A', // Deep navy for app background
-          card: '#1E293B',    // Slightly lighter for cards
-          light: '#334155',   // A subtle lighter background for contrast
-          dark: '#0B1120',    // Darker shade for modals/overlays
+          DEFAULT: '#0D1117', // Very dark gray-black for app background
+          card: '#161B22',    // Darker gray for cards
+          light: '#1F242D',   // Slightly lighter gray for contrast
+          dark: '#0A0E13',    // Near-black for modals/overlays
         },
         text: {
-          primary: '#E2E8F0',  // Light grayish text for readability
-          secondary: '#A0AEC0',// Subtle gray for subtitles or less critical text
-          muted: '#64748B',    // Muted gray-blue for placeholders or meta text
-          contrast: '#FFFFFF', // Pure white for headings or call-to-actions
-          warning: '#F59E0B',  // Amber for warning text (e.g., "No results found")
+          primary: '#C9D1D9',  // Light gray for readability
+          secondary: '#8B949E', // Subtle gray for subtitles
+          muted: '#6E7681',    // Muted gray for placeholders/meta text
+          contrast: '#F5F5F5', // Almost white for headings or CTAs
+          warning: '#D97706',  // Darker amber for warnings
         },
         button: {
-          primary: '#2563EB', // Vibrant blue for action buttons
-          hover: '#1D4ED8',   // Slightly darker hover state
-          active: '#1E40AF',  // Even darker blue for button active state
-          disabled: '#475569',// Grayish blue for disabled buttons
+          primary: '#1F6FEB', // Vibrant deep blue for action buttons
+          hover: '#1C4FB2',   // Darker blue for hover state
+          active: '#163A73',  // Even darker blue for active state
+          disabled: '#374151',// Dark gray for disabled buttons
         },
         accent: {
-          teal: '#4fd1c5',
-          blue: '#7f9cf5',
-          yellow: '#FACC15',  // Bright yellow for highlights or star ratings
-          red: '#EF4444',     // Vibrant red for error messages
-          green: '#22C55E',   // Bright green for success notifications
-          purple: '#A855F7',  // Purple for a fun secondary accent
+          teal: '#4fd1c5',     // Muted teal for subtle accents
+          blue: '#3B82F6',     // Deep blue for secondary accents
+          yellow: '#EAB308',   // Warm yellow for highlights/star ratings
+          red: '#DC2626',      // Dark red for error messages
+          green: '#16A34A',    // Deep green for success notifications
+          purple: '#7C3AED',   // Muted purple for a secondary accent
         },
         border: {
-          DEFAULT: '#334155', // Border gray (subtle and modern)
-          active: '#1D4ED8',  // Border blue for focus/active states
+          DEFAULT: '#1F2937', // Dark gray for borders
+          active: '#1E40AF',  // Deep blue for focus/active states
         },
       },
       gradientColorStops: {
         blue: {
-          start: '#1E3A8A', // Dark blue for gradient start
-          mid: '#2563EB',   // Vibrant blue for gradient middle
-          end: '#93C5FD',   // Light blue for gradient end
+          start: '#1E293B', // Dark gray-blue for gradient start
+          mid: '#3B82F6',   // Vibrant blue for gradient middle
+          end: '#60A5FA',   // Lighter blue-gray for gradient end
         },
       },
       boxShadow: {
-        card: '0 4px 6px rgba(0, 0, 0, 0.1)',      // Subtle shadow for cards
-        button: '0 2px 4px rgba(0, 0, 0, 0.2)',    // Stronger shadow for buttons
-        focus: '0 0 0 3px rgba(37, 99, 235, 0.5)', // Blue shadow for focused elements
+        card: '0 4px 8px rgba(0, 0, 0, 0.15)',      // Slightly stronger shadow for cards
+        button: '0 2px 6px rgba(0, 0, 0, 0.25)',    // Stronger shadow for buttons
+        focus: '0 0 0 4px rgba(31, 111, 235, 0.5)', // Darker blue shadow for focus
       },
 
       animation: {
