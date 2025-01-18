@@ -7,7 +7,7 @@ import { FaPlay, FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { BsBookmarkPlus, BsBookmarkCheckFill } from "react-icons/bs";
 
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
-import fetchDetails, { fetchRecommendations } from '../services/movieDetailsService';
+import fetchDetails, { fetchRecommendations, fetchSimilars } from '../services/movieDetailsService';
 import { addToWatchlist, removeFromWatchlist, selectWatchlist } from '../store/slices/watchlistSlice';
 
 import { CardHorizontal, Loader, NoContentFound, TrailerModal, Rating } from '../components';
@@ -66,7 +66,7 @@ export default function Detail() {
       const fetchData = async () => {
         try {
           setSimilarsLoading(true);
-          const response = await fetchRecommendations(media_type, content_id);
+          const response = await fetchSimilars(media_type, content_id);
           if(response && response.length > 0) {
             setSimilars(response);
           }
@@ -122,9 +122,10 @@ export default function Detail() {
 
 
             <section className='py-4 relative bg-cover'
-              style={ backdrop_path && {
-                backgroundImage: `url(${backdrop_path})`,
-              }}>
+              style={ backdrop_path ? { 
+                backgroundImage: `url(${backdrop_path})` 
+              } : undefined}
+            >
 
               <div className="absolute inset-0 bg-black bg-opacity-75"></div>
               <div className='relative z-10 py-2 px-4'>
@@ -196,9 +197,9 @@ export default function Detail() {
             }
 
             <section className='pt-2'>
-              <div className='flex items-center'>
+              <div className='flex items-center w-fit' onClick={handleSimilars}>
                 <h2 className='text-2xl font-semibold p-3'>Similars</h2>
-                <button className='text-2xl font-semibold' onClick={handleSimilars}>
+                <button className='text-2xl font-semibold'>
                     {isSimilarsOpen ? <FaCaretUp /> : <FaCaretDown />}
                 </button>
               </div>
@@ -208,9 +209,9 @@ export default function Detail() {
             </section>
 
             <section className='pt-2'>
-              <div className='flex items-center'>
+              <div className='flex items-center w-fit' onClick={handleRecommendations}>
                 <h2 className='text-2xl font-semibold p-3'>Recommendations</h2>
-                <button className='text-2xl font-semibold' onClick={handleRecommendations}>
+                <button className='text-2xl font-semibold'>
                   {isRecommendationsOpen ? <FaCaretUp /> : <FaCaretDown />}
                 </button>
               </div>

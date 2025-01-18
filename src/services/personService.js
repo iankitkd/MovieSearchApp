@@ -47,6 +47,41 @@ export const fetchPersonExternalId = async (personId) => {
     }
 }
 
+export const fetchPersonCreditedFor = async (personId) => {
+    try {
+        const response = await apiConnector("GET", `${endPoints.personUrl}/${personId}/combined_credits`);
+        const cast = response.data.cast;
+        const crew = response.data.crew;
+
+        const updatedData = (data) => {
+            return data.map((ele) => {
+                const releaseYear = ele.release_date
+                    ? ele.release_date.split("-")[0]
+                    : ele.first_air_date
+                    ? ele.first_air_date.split("-")[0]
+                    : "0000"; // Default year if not available or invalid
+                
+                return {
+                    id: ele.id,
+                    title: ele.title || ele.original_title || ele.name,
+                    image_path: ele.poster_path ? IMAGE_BASE_URL + ele.poster_path : "",
+                    media_type: ele.media_type,
+                    character: ele.character || ele.job,
+                    release_year: releaseYear,
+                };
+            });
+        }
+        var updatedCastData = updatedData(cast);
+        var updatedCrewData = updatedData(crew);
+        updatedCastData.sort((a, b) => parseInt(b.release_year) - parseInt(a.release_year));
+        updatedCrewData.sort((a, b) => parseInt(b.release_year) - parseInt(a.release_year));
+        return {updatedCastData, updatedCrewData};
+    } catch (error) {
+        console.log("Fetch Person credited for :: Error", error);
+        return {};
+    }
+}
+
 export const fetchPersonPopular = async () => {
     try {
         const response = await apiConnector("GET", `${endPoints.personUrl}/popular`);

@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
+import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
 
-import { fetchPersonDetails } from '../services/personService';
+import { fetchPersonCreditedFor, fetchPersonDetails } from '../services/personService';
 import { Loader, NoContentFound } from '../components';
 
 export default function DetailPerson() {
     const [loading, setLoading] = useState(false);
     const [personDetails, setPersonDetails] = useState({});
+    const [knownForData, setKnownForData] = useState({});
+    const [knownFor, setKnownFor] = useState([]);
+    const [isKnownForOpen, setIsKnownForOpen] = useState(false);
+    const [knownForLoading, setKnownForLoading] = useState(false);
+    const [knownForCategory, setKnownForCategory] = useState("Cast");
     
     const {id} = useParams();
     const navigate = useNavigate();
@@ -19,6 +25,39 @@ export default function DetailPerson() {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleExpanded = () => setIsExpanded(!isExpanded);
+
+    const handleKnownFor = () => {
+        const fetchData = async () => {
+            try {
+                setKnownForLoading(true);
+                const response = await fetchPersonCreditedFor(id);
+                if(response) {
+                    setKnownForData(response)
+                }
+                if(response.updatedCastData && response.updatedCastData.length > 0) {
+                    setKnownFor(response.updatedCastData);
+                }
+            } catch (error) {
+                console.log("Error fetching known for", error);
+            } finally {
+                setKnownForLoading(false);
+            }
+        }
+
+        if(knownFor.length == 0) {
+            fetchData();
+        }
+        setIsKnownForOpen((prev) => !prev);
+    }
+
+    const handleKnownForCategory = (category) => {
+        setKnownForCategory(category);
+        if(category == "Cast") {
+            setKnownFor(knownForData.updatedCastData);
+        } else if(category == "Crew") {
+            setKnownFor(knownForData.updatedCrewData);
+        }
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,6 +74,10 @@ export default function DetailPerson() {
             }
         }
         fetchData();
+        setIsKnownForOpen(false);
+        setKnownForCategory("Cast");
+        setKnownForData([]);
+        setKnownFor([]);
     }, [id])
 
 
@@ -138,6 +181,7 @@ export default function DetailPerson() {
                                 <span className='md:col-span-2'>{place_of_birth}</span>
                             </div>
 
+                            {biography && (<>
                             <h2 className='text-2xl font-semibold pt-3'>Biography</h2>
                             <p className='px-1 transition-all duration-300'>
                                 {isExpanded ? biography : biography.slice(0, maxLengthBio)}
@@ -148,10 +192,53 @@ export default function DetailPerson() {
                                     {!isExpanded ? (maxLengthBio < biography.length ? "Show More" : ""): "Show Less" }
                                 </span>
                             </p>
+                            </>)}
 
                         </div>
                     </div>
                 </section>
+
+                <section className='flex flex-col justify-center items-center py-2'>
+                    <div className='flex items-center w-fit' onClick={handleKnownFor}>
+                        <h2 className='text-2xl font-semibold p-3'>Known For</h2>
+                        <button className='text-2xl font-semibold'>
+                            {isKnownForOpen ? <FaCaretUp /> : <FaCaretDown />}
+                        </button>
+                    </div>
+
+                    {isKnownForOpen && (
+                        knownForLoading ? ( 
+                            <Loader />
+                    ) : knownFor.length == 0 ? ( 
+                            <NoContentFound />
+                    ) : ( <>
+                    <div className='flex flex-row items-center h-5 gap-3'>
+                        <button className={`${knownForCategory == "Cast" ? "text-accent-teal" : ""}`} onClick={() => handleKnownForCategory("Cast")}>Cast</button>
+                        <button className={`${knownForCategory == "Crew" ? "text-accent-teal" : ""}`} onClick={() => handleKnownForCategory("Crew")}>Crew</button>
+                    </div>
+                    <div className='h-[500px] w-full md:w-[700px] bg-background-card overflow-y-scroll flex flex-col'>
+                        {knownFor.map((ele, index) => (
+                            <Link to={`/${ele.media_type}/${ele.id}`} key={index}>
+                                <div className='h-[100px] w-full flex flex-row gap-3 px-2 mb-1'>
+                                    <img 
+                                        className="w-[70px] h-[100px]" 
+                                        src={ele.image_path ? ele.image_path : NoImagePlaceholder} 
+                                        alt="Poster" 
+                                        loading='lazy'
+                                    />
+                                    <div className='flex flex-col justify-center hover:cursor-pointer'>
+                                        <p className='font-semibold text-lg line-clamp-2'>{ele.title}</p>
+                                        <p className='text-text-secondary line-clamp-1'>{ele.character ? `as ${ele.character}` : ""}</p>
+                                        <p className='text-text-muted'>{ele.release_year == "0000" ? "" : ele.release_year}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                    </>
+                    ))}
+                </section>
+
             </div>
         )
     }
