@@ -5,7 +5,7 @@ const genders = ["Not Specified", "Female", "Male", "Non-binary"];
 
 export const fetchPersonDetails = async (personId) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.personUrl}/${personId}`);
+        const response = await apiConnector(`${endPoints.personUrl}/${personId}`);
         const data = response.data;
 
         const external_ids = await fetchPersonExternalId(personId);
@@ -31,7 +31,7 @@ export const fetchPersonDetails = async (personId) => {
 
 export const fetchPersonExternalId = async (personId) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.personUrl}/${personId}/external_ids`);
+        const response = await apiConnector(`${endPoints.personUrl}/${personId}/external_ids`);
         const data = response.data;
         const updatedData = {         
             imdb_id: data.imdb_id ? `${externalPoints.imdbUrl}/${data.imdb_id}` : "",
@@ -49,7 +49,7 @@ export const fetchPersonExternalId = async (personId) => {
 
 export const fetchPersonCreditedFor = async (personId) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.personUrl}/${personId}/combined_credits`);
+        const response = await apiConnector(`${endPoints.personUrl}/${personId}/combined_credits`);
         const cast = response.data.cast;
         const crew = response.data.crew;
 
@@ -84,7 +84,7 @@ export const fetchPersonCreditedFor = async (personId) => {
 
 export const fetchPersonPopular = async () => {
     try {
-        const response = await apiConnector("GET", `${endPoints.personUrl}/popular`);
+        const response = await apiConnector(`${endPoints.personUrl}/popular`);
         const datas = response.data.results;
 
         const updatedData = datas.map(data => ({

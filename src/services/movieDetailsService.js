@@ -3,7 +3,7 @@ import { IMAGE_BASE_URL, endPoints, externalPoints } from "./apis";
 
 export const fetchMovieDetails = async (id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.movieUrl}/${id}`);
+        const response = await apiConnector(`${endPoints.movieUrl}/${id}`); 
         const data = response.data;
 
         const castDetails = await fetchCastDetails("movie", id);
@@ -30,7 +30,7 @@ export const fetchMovieDetails = async (id) => {
 
 export const fetchShowDetails = async (id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.tvUrl}/${id}`);
+        const response = await apiConnector(`${endPoints.tvUrl}/${id}`);
         const data = response.data;
 
         const castDetails = await fetchCastDetails("tv", id);
@@ -55,7 +55,7 @@ export const fetchShowDetails = async (id) => {
 
 export const fetchTrailer = async (type, id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/videos`);
+        const response = await apiConnector(`${endPoints.baseUrl}/${type}/${id}/videos`);
         const videos = response.data.results;
         var updatedData = videos.find((video) => video.type == "Trailer");
         if(!updatedData) {
@@ -74,7 +74,7 @@ export const fetchTrailer = async (type, id) => {
 
 const fetchCastDetails = async (type, id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/credits`);
+        const response = await apiConnector(`${endPoints.baseUrl}/${type}/${id}/credits`);
         const cast = response.data.cast;
         const updatedData = cast.map((data) => ({
             id: data.id,
@@ -91,7 +91,7 @@ const fetchCastDetails = async (type, id) => {
 }
 export const fetchSimilars = async (type, id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/similar`);
+        const response = await apiConnector(`${endPoints.baseUrl}/${type}/${id}/similar`);
         const similars = response.data.results;
         const updatedData = similars.map((data) => ({
             id: data.id,
@@ -108,7 +108,7 @@ export const fetchSimilars = async (type, id) => {
 }
 export const fetchRecommendations = async (type, id) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.baseUrl}/${type}/${id}/recommendations`);
+        const response = await apiConnector(`${endPoints.baseUrl}/${type}/${id}/recommendations`);
         const recommendations = response.data.results;
         const updatedData = recommendations.map((data) => ({
             id: data.id,

@@ -3,7 +3,7 @@ import { IMAGE_BASE_URL ,endPoints } from './apis'
 
 export const fetchTrendingAll = async (timeWindow) => {
     try {
-        const response = await apiConnector("GET", endPoints.trendingUrl(timeWindow));
+        const response = await apiConnector(endPoints.trendingUrl(timeWindow));
         const data = response.data.results;
         const updatedData = data.map(ele => ({
             id: ele.id,
@@ -22,7 +22,7 @@ export const fetchTrendingAll = async (timeWindow) => {
 
 export const fetchSearchContent = async (query) => {
     try {
-        const response = await apiConnector("GET", `${endPoints.searchUrl}?query=${query}}`);
+        const response = await apiConnector(`${endPoints.searchUrl}?query=${query}}`);
         const data = response.data.results;
         const updatedData = data.map(ele => ({
             id: ele.id,
@@ -46,7 +46,7 @@ export const fetchMovieAll = async (category, region) => {
         if(! ["popular", "top_rated", "now_playing", "upcoming"].includes(category)) {
             throw new Error("Invalid category");
         }
-        const response = await apiConnector("GET", `${endPoints.movieUrl}/${category}`, {region});
+        const response = await apiConnector(`${endPoints.movieUrl}/${category}`, region);
         const data = response.data.results;
         const updatedData = data.map(ele => ({
             id: ele.id,
@@ -68,7 +68,7 @@ export const fetchTvShowAll = async (category) => {
         if(! ["popular", "top_rated", "on_the_air", "airing_today"].includes(category)) {
             throw new Error("Invalid category");
         }
-        const response = await apiConnector("GET", `${endPoints.tvUrl}/${category}`);
+        const response = await apiConnector(`${endPoints.tvUrl}/${category}`);
         const data = response.data.results;
         const updatedData = data.map(ele => ({
             id: ele.id,

@@ -1,21 +1,21 @@
 import axios from "axios";
+const  OWN_API_BASE_URL = import.meta.env.VITE_OWN_API_BASE_URL;
+
+export const OWN_API_URL = `${OWN_API_BASE_URL}/api/movies`;
 
 const axiosInstance = axios.create({});
 
-const {VITE_ACCESS_TOKEN} = import.meta.env;
+const apiConnector = (url, region) => {
+    if(!url) return;
 
-const apiConnector = (method, url, params, bodyData, headers) => {
     return axiosInstance({
-        method: method,
-        url: url,
-        data: bodyData ? bodyData : null,
-        params: params ? params : null,
+        method: "POST",
+        url: OWN_API_URL,
+        data: {url, region},
         headers: {
             accept: 'application/json',
-            Authorization: `Bearer ${VITE_ACCESS_TOKEN}`,
-            ...headers
         },
     });
 };
 
-export default apiConnector;
+export default apiConnector; 
