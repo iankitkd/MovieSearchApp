@@ -22,7 +22,7 @@ export const fetchTrendingAll = async (timeWindow) => {
 
 export const fetchSearchContent = async (query) => {
     try {
-        const response = await apiConnector(`${endPoints.searchUrl}?query=${query}}`);
+        const response = await apiConnector(`${endPoints.searchUrl}?query=${query}`);
         const data = response.data.results;
         const updatedData = data.map(ele => ({
             id: ele.id,

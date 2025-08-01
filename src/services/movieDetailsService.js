@@ -124,9 +124,8 @@ export const fetchRecommendations = async (type, id) => {
     }
 }
 
-const fetchDetails = async (path) => {
+const fetchDetails = async ({type, id}) => {
     try {
-        const [first , type, id] = path.split("/");
         var response = {};
         if(type == "movie") {
             response = await fetchMovieDetails(id);

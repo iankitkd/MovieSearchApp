@@ -1,39 +1,18 @@
-import React, { useEffect, useState } from 'react'
 
 import { RxCross2 } from "react-icons/rx";
 
-import {fetchTrailer} from '../services/movieDetailsService'
 import {Loader} from './index';
+import { useTrailersQuery } from '../services/queries';
 
 export default function TrailerModal({id, media_type, closeTrailer}) { 
-    const [trailerPath, setTrailerPath] = useState("");
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await fetchTrailer(media_type, id);
-                if(response) {
-                    setTrailerPath(response);
-                }
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching trailer:', error);
-                setLoading(false);
-            }
-        }
-        fetchData();
-    
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, []);
+    const {
+        data: trailerPath,
+        isLoading,
+    } = useTrailersQuery(media_type, id);
 
 
     const renderContent = () => {
-        if(loading) {
+        if(isLoading) {
             return <Loader />
         }
 

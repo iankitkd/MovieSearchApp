@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { Detail, DetailPerson, ErrorPage, Home, Movie, Person, Tv, Watchlist } from './pages'
-import { Header, Footer, ScrollToTop } from './components'
+import { Footer, Header, ScrollToTop } from './components'
 import { fetchUserLocation } from './store/slices/userLocationSlice'
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
   return (
     <div className='width-screen min-h-screen bg-background flex flex-col'>
       <ScrollToTop />
-      
+
       <Header />
 
       <Routes>

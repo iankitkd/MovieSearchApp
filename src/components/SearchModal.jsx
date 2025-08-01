@@ -1,15 +1,13 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react'
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react'
 import { RxCross2 } from "react-icons/rx";
 
 import {CardDisplay} from './index';
 
 import debounce from '../utils/debounce';
-import { fetchSearchContent } from '../services/movieService';
+import { useSearchQuery } from '../services/queries';
 
 export default function SearchModal({closeModal}) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
-  const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
 
   const handleOutsideClick = useCallback((e) => {
@@ -18,25 +16,19 @@ export default function SearchModal({closeModal}) {
     }
   }, [])
 
-  const fetchData = async (query) => {
-    try {
-      setLoading(true);
-      const response = await fetchSearchContent(query);
-      if(response && response.length > 0) {
-        setSearchResult(response);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching trending content data:', error);
-      setLoading(false);
-    }
-  }
-  const debounceSearch = debounce(fetchData, 500);
+  const {
+    data: searchResult,
+    isLoading,
+    refetch: fetchData,
+    isFetched
+  } = useSearchQuery(searchQuery);
+
+  const debounceFetch = useMemo(() => debounce(fetchData, 500), [fetchData]);
 
   const searchHandler = useCallback((e) => {
     const value = e.target.value;
     setSearchQuery(value);
-    debounceSearch(value);
+    debounceFetch();
   }, [])
 
   useEffect(() => {
@@ -74,7 +66,7 @@ export default function SearchModal({closeModal}) {
         {
           searchQuery && <CardDisplay 
             cardData={searchResult}
-            loading={loading}
+            isLoading={isLoading}
           /> 
         }
       </section>

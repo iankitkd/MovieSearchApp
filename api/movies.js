@@ -11,7 +11,8 @@ export default async function handler(req, res) {
     const apiKey = process.env.TMDB_API_KEY;
 
     try {
-        const response = await fetch(`${url}?region=${region || "in"}`, {
+        const updatedUrl = region ? `${url}?region=${region}` : url;
+        const response = await fetch(updatedUrl, {
             method: 'GET',
             headers: {
               accept: 'application/json',

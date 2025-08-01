@@ -6,16 +6,12 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 import NoImagePlaceholder from "../assets/NoImagePlaceholder.jpg";
 
-import { fetchPersonCreditedFor, fetchPersonDetails } from '../services/personService';
 import { Loader, NoContentFound } from '../components';
+import { usePersonCreditedForQuery, usePersonDetailsQuery } from '../services/queries';
 
 export default function DetailPerson() {
-    const [loading, setLoading] = useState(false);
-    const [personDetails, setPersonDetails] = useState({});
-    const [knownForData, setKnownForData] = useState({});
     const [knownFor, setKnownFor] = useState([]);
     const [isKnownForOpen, setIsKnownForOpen] = useState(false);
-    const [knownForLoading, setKnownForLoading] = useState(false);
     const [knownForCategory, setKnownForCategory] = useState("Cast");
     
     const {id} = useParams();
@@ -26,26 +22,29 @@ export default function DetailPerson() {
 
     const toggleExpanded = () => setIsExpanded(!isExpanded);
 
-    const handleKnownFor = () => {
-        const fetchData = async () => {
-            try {
-                setKnownForLoading(true);
-                const response = await fetchPersonCreditedFor(id);
-                if(response) {
-                    setKnownForData(response)
-                }
-                if(response.updatedCastData && response.updatedCastData.length > 0) {
-                    setKnownFor(response.updatedCastData);
-                }
-            } catch (error) {
-                console.log("Error fetching known for", error);
-            } finally {
-                setKnownForLoading(false);
-            }
-        }
+    const {
+        data: personDetails,
+        isLoading,
+    } = usePersonDetailsQuery(id);
 
-        if(knownFor.length == 0) {
-            fetchData();
+    const {
+        data: knownForData,
+        isLoading: knownForLoading,
+        refetch: fetchKnownFor,
+        isFetched: isKnownForFetched,
+    } = usePersonCreditedForQuery(id);
+
+    
+    useEffect(() => {
+        if(knownForData && knownForData.updatedCastData && knownForData.updatedCastData.length > 0) {
+            setKnownFor(knownForData.updatedCastData);
+        }
+    }, [knownForData])
+
+
+    const handleKnownFor = () => {
+        if(!isKnownForFetched) {
+            fetchKnownFor();
         }
         setIsKnownForOpen((prev) => !prev);
     }
@@ -59,30 +58,9 @@ export default function DetailPerson() {
         }
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await fetchPersonDetails(id);
-                if(response) {
-                    setPersonDetails(response);
-                }
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching Person details:', error);
-                setLoading(false);
-            }
-        }
-        fetchData();
-        setIsKnownForOpen(false);
-        setKnownForCategory("Cast");
-        setKnownForData([]);
-        setKnownFor([]);
-    }, [id])
-
 
     const renderContent = (details) => {
-        if (loading) {
+        if (isLoading) {
             return (<Loader />)
         }
         if (Object.keys(details).length === 0) {
@@ -94,8 +72,7 @@ export default function DetailPerson() {
 
         return (
             <div className='flex flex-col px-2'>
-
-                <section className='py-4'>
+                <section className='pb-4'>
     
                     <div className='py-2 px-4'
                         onClick={() => navigate(-1)}

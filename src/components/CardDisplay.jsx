@@ -1,20 +1,19 @@
-import React from 'react'
 
 import {Card, CardPerson, Loader, NoContentFound} from "./index"
 
-export default function CardDisplay({cardData, loading}) {
+export default function CardDisplay({cardData, isLoading}) {
 
     const renderContent = () => {
-        if(loading) {
+        if(isLoading) {
             return (<Loader />)
         }
 
-        if(cardData.length == 0) {
+        if(cardData && cardData.length == 0) {
             return (<NoContentFound />)
         }
 
         return (
-            cardData.map((ele) => {
+            cardData?.map((ele) => {
                 if(ele.media_type == "person") {
                     return(
                         <CardPerson 

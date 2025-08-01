@@ -17,5 +17,22 @@ const apiConnector = (url, region) => {
         },
     });
 };
-
 export default apiConnector; 
+
+
+// const {VITE_ACCESS_TOKEN} = import.meta.env;
+
+// const apiConnector = (url, region) => {
+//     if(!url) return;
+
+//     const updatedUrl = region ? `${url}?region=${region}` : url;
+//     return axiosInstance({
+//         method: "GET",
+//         url: updatedUrl,
+//         headers: {
+//             accept: 'application/json',
+//             Authorization: `Bearer ${VITE_ACCESS_TOKEN}`,
+//         },
+//     });
+// };
+// export default apiConnector; 

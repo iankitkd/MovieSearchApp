@@ -68,6 +68,7 @@ export default function Card({content}) {
             <div className='flex flex-row justify-center items-center gap-1 text-text-secondary hover:text-text-primary hover:cursor-pointer' 
                 onClick={(event) => {
                     event.preventDefault();
+                    event.stopPropagation();
                     setIsTrailerOpen(true);
                 }}
             >

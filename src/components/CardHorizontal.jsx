@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import {Card, CardPerson, LoaderMovingBar, NoContentFound} from './index'
 
-export default function CardHorizontal({cardData, type, loading}) {
+export default function CardHorizontal({cardData, type, isLoading, showLoader=true}) {
     const [visibleCount, setVisibleCount] = useState(20);
 
     const showMoreCards = () => {
@@ -10,17 +10,17 @@ export default function CardHorizontal({cardData, type, loading}) {
     };
 
     const renderContent = () => {
-        if(loading) {
-            return (<LoaderMovingBar />)
+        if(isLoading) {
+            return (showLoader ? <LoaderMovingBar /> : <div></div>)
         }
 
-        if(cardData.length == 0) {
+        if(cardData && cardData.length == 0) {
             return (<NoContentFound />)
         }
 
         return (
             <>
-            {cardData.slice(0, visibleCount).map((ele) => {
+            {cardData?.slice(0, visibleCount).map((ele) => {
                 if(type == "person" || ele.media_type == "person") {
                     return(
                         <CardPerson 

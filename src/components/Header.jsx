@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useMatch } from 'react-router-dom';
 import { FaBars, FaSearch, FaUserCircle } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 
@@ -24,24 +24,33 @@ const navLinks = [
   },
 ]
 
-export default function Header() {
-  const location = useLocation();
+export default function Header({showHeaderOverlay = false}) {
+  const { pathname } = useLocation();
+  const isHomePage = useMatch('/');
+  const isMovieDetailPage = useMatch('/movie/:id');
+  const isTvShowDetailPage = useMatch('/tv/:id');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const openModal = () => {
     setIsModalOpen(true);
   };
-
+  
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   }
+  
+  const isOverlayPage = isHomePage || isMovieDetailPage || isTvShowDetailPage;
+
+  if(isOverlayPage && !showHeaderOverlay) {
+    return null;
+  } 
 
   return (
-    <header className='bg-background-dark text-text-primary flex gap-4 justify-around items-center p-2'>
+    <header className={`bg-background-dark text-text-primary flex gap-4 justify-around items-center p-2 ${showHeaderOverlay && 'absolute top-0 left-0 w-full z-10 bg-black/5'}`}>
 
       <div className='lg:hidden flex justify-center items-center w-1/6 text-xl'
         onClick={toggleMobileMenu}>
@@ -61,7 +70,7 @@ export default function Header() {
               key={index}
               to={ele.link}
               className={({ isActive }) =>
-                `${isActive && location.pathname == ele.link
+                `${isActive && pathname == ele.link
                   ? "text-accent-teal border-b-2 border-accent-teal font-bold"
                   : "hover:text-accent-teal"} mx-2 p-1`}
             >
@@ -101,7 +110,7 @@ export default function Header() {
               to={ele.link}
               onClick={() => setIsMobileMenuOpen(false)} // Close menu on link click
               className={({ isActive }) =>
-                `${isActive && location.pathname === ele.link 
+                `${isActive && pathname === ele.link 
                   ? "text-accent-teal font-bold" 
                   : "hover:text-accent-teal"} py-2`
               }

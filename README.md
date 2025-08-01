@@ -38,7 +38,7 @@ A dynamic and feature-rich Movie Search App built with **React** and styled usin
 ## Tech Stack
 - **Frontend**: React, Tailwind CSS
 - **API Integration**: TMDb API, IPAPI
-- **API Handling**: Axios
+- **API Handling**: Axios, TanStack Query
 - **State Management**: Redux
 - **Storage**: Local Storage
 - **Build Tool**: Vite
