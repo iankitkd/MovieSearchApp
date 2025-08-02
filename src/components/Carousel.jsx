@@ -99,20 +99,20 @@ export default function Carousel() {
         </div>
 
         <button
-          className="hidden sm:block absolute left-2 md:left-4 z-20 bg-black/30 text-white p-2 md:p-3 rounded-full hover:bg-opacity-80"
+          className="hidden sm:block absolute left-2 md:left-4 bg-black/30 text-white p-2 md:p-3 rounded-full hover:bg-opacity-80"
           onClick={handleLeftClick}
         >
           <FaChevronLeft />
         </button>
 
         <button
-          className="hidden sm:block absolute right-2 md:right-4 z-20 bg-black bg-opacity-30 text-white p-2 md:p-3 rounded-full hover:bg-opacity-80"
+          className="hidden sm:block absolute right-2 md:right-4 bg-black bg-opacity-30 text-white p-2 md:p-3 rounded-full hover:bg-opacity-80"
           onClick={handleRightClick}
         >
           <FaChevronRight />
         </button>
 
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3">
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-3">
           {Array.from({ length: total }).map((_, idx) => (
             <button
               key={idx}

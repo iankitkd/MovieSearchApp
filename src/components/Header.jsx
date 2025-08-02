@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useMatch } from 'react-router-dom';
 import { FaBars, FaSearch, FaUserCircle } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
@@ -29,6 +29,8 @@ export default function Header({showHeaderOverlay = false}) {
   const isHomePage = useMatch('/');
   const isMovieDetailPage = useMatch('/movie/:id');
   const isTvShowDetailPage = useMatch('/tv/:id');
+
+  const [isTransparent, setIsTransparent] = useState(showHeaderOverlay);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const openModal = () => {
@@ -41,7 +43,17 @@ export default function Header({showHeaderOverlay = false}) {
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+    setIsTransparent((prev) => !prev);
   }
+
+  useEffect(() => {
+    if(isMobileMenuOpen) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
   
   const isOverlayPage = isHomePage || isMovieDetailPage || isTvShowDetailPage;
 
@@ -50,7 +62,7 @@ export default function Header({showHeaderOverlay = false}) {
   } 
 
   return (
-    <header className={`bg-background-dark text-text-primary flex gap-4 justify-around items-center p-2 ${showHeaderOverlay && 'absolute top-0 left-0 w-full z-10 bg-black/5'}`}>
+    <header className={`bg-background-dark text-text-primary flex gap-4 justify-around items-center p-2 ${showHeaderOverlay && 'absolute top-0 left-0 w-full z-50'} ${isTransparent && "bg-black/5"}`}>
 
       <div className='lg:hidden flex justify-center items-center w-1/6 text-xl'
         onClick={toggleMobileMenu}>
@@ -102,7 +114,7 @@ export default function Header({showHeaderOverlay = false}) {
       {isModalOpen && <SearchModal closeModal={closeModal} />}
 
       {isMobileMenuOpen && (
-      <div className="lg:hidden absolute top-[64px] left-0 w-2/3 h-[calc(100vh-64px)] bg-background-dark opacity-95 z-20 transition-all duration-400 ease-in-out">
+      <div className="lg:hidden absolute top-[64px] left-0 w-2/3 h-[calc(100vh-64px)] bg-background-dark opacity-95 z-50 transition-all duration-700 ease-in-out">
         <div className="flex flex-col items-center">
           {navLinks.map((ele, index) => (
             <NavLink
